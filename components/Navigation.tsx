@@ -180,7 +180,7 @@ const categories: Category[] = [
 export default function Navigation() {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const buttonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
-  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; width: number } | null>(null);
+  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
   const [mounted, setMounted] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const navScrollRef = useRef<HTMLDivElement | null>(null);
@@ -201,34 +201,24 @@ export default function Navigation() {
         const rect = button.getBoundingClientRect();
         
         // Get viewport-relative position (for fixed positioning)
-        // Position dropdown directly below the button, aligned with left edge
-        let left = rect.left;
+        // Position dropdown directly below the navbar, full width
         let top = rect.bottom;
         
         // Add a tiny gap to prevent any visual overlap
         top += 1;
         
-        // Calculate dropdown width (responsive)
-        const dropdownWidth = Math.min(600, window.innerWidth - 32);
+        // Full screen width dropdown
+        const dropdownWidth = window.innerWidth;
+        const dropdownHeight = 350;
         
-        // Start with button's left edge
-        let finalLeft = left;
-        
-        // Ensure dropdown doesn't go off-screen on the right
-        if (finalLeft + dropdownWidth > window.innerWidth - 16) {
-          // Shift left so it fits on screen
-          finalLeft = window.innerWidth - dropdownWidth - 16;
-        }
-        
-        // Ensure dropdown doesn't go off-screen on the left
-        if (finalLeft < 16) {
-          finalLeft = 16;
-        }
+        // Full width from left edge
+        const finalLeft = 0;
         
         setDropdownPosition({
           top: top,
           left: finalLeft,
           width: dropdownWidth,
+          height: dropdownHeight,
         });
       }
     }
@@ -239,7 +229,10 @@ export default function Navigation() {
     
     if (hoveredCategory) {
       const handleScroll = () => updateDropdownPosition();
-      const handleResize = () => updateDropdownPosition();
+      const handleResize = () => {
+        // Update position on resize to maintain full width
+        updateDropdownPosition();
+      };
       
       window.addEventListener('scroll', handleScroll, true);
       window.addEventListener('resize', handleResize);
@@ -270,14 +263,18 @@ export default function Navigation() {
 
     return (
       <div 
-        className="bg-white text-gray-900 shadow-xl border border-gray-300"
+        className="bg-white text-gray-900 shadow-xl border border-gray-300 w-screen"
         style={{ 
           position: 'fixed',
           top: `${dropdownPosition.top}px`,
           left: `${dropdownPosition.left}px`,
           width: `${dropdownPosition.width}px`,
+          height: `${dropdownPosition.height}px`,
           zIndex: 999999,
           boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
         }}
         onMouseEnter={(e) => {
           e.stopPropagation();
@@ -292,32 +289,34 @@ export default function Navigation() {
           setHoveredCategory(null);
         }}
       >
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row h-full w-full">
           {/* Left side - Category items in two columns */}
-          <div className="flex-1 p-4 md:p-6 min-w-0 md:min-w-[400px]">
-            <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-gray-900 mb-3 md:mb-4">
-              {currentCategory!.name}
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 md:gap-x-6 gap-y-1">
-              {currentCategory!.items!.map((item, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="block py-1.5 md:py-2 hover:text-green-600 transition-colors text-xs sm:text-sm md:text-base text-gray-700 hover:font-medium"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  {item}
-                </a>
-              ))}
+          <div className="flex-1 p-3 md:p-4 overflow-y-auto">
+            <div className="max-w-7xl mx-auto w-full">
+              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-2">
+                {currentCategory!.name}
+              </h3>
+              <div className="grid grid-cols-2 gap-x-3 md:gap-x-4 gap-y-0.5">
+                {currentCategory!.items!.map((item, index) => (
+                  <a
+                    key={index}
+                    href="#"
+                    className="block py-1 hover:text-green-600 transition-colors text-sm text-gray-700 hover:font-medium"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    {item}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Right side - Placeholder message */}
-          <div className="hidden md:flex items-center justify-center p-6 lg:p-8 border-t md:border-t-0 md:border-l border-gray-200 min-w-[200px] lg:min-w-[250px] bg-gray-50">
+          <div className="hidden md:flex items-center justify-center p-4 border-t md:border-t-0 md:border-l border-gray-200 w-[280px] bg-gray-50 flex-shrink-0">
             <div className="text-center">
-              <div className="mb-3 md:mb-4 flex justify-center">
+              <div className="mb-2 flex justify-center">
                 <svg 
-                  className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 text-gray-400" 
+                  className="w-12 h-12 text-gray-400" 
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -330,10 +329,10 @@ export default function Navigation() {
                   />
                 </svg>
               </div>
-              <p className="text-gray-700 font-medium text-sm md:text-base mb-2">
+              <p className="text-gray-700 font-medium text-xs mb-1">
                 Hover over a category to see subcategories
               </p>
-              <p className="text-gray-500 text-xs md:text-sm">
+              <p className="text-gray-500 text-xs">
                 Browse through our extensive product range
               </p>
             </div>
