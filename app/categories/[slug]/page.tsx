@@ -15,6 +15,7 @@ export default function CategoryPage() {
   const params = useParams();
   const slug = params.slug as string;
   const categoryName = slugToCategory[slug] || slug;
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Get all products in this category
   const categoryProducts = Object.values(productData).filter((product) => {
@@ -25,6 +26,14 @@ export default function CategoryPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<'default' | 'price-low' | 'price-high' | 'rating' | 'discount'>('default');
   const [filteredProducts, setFilteredProducts] = useState(categoryProducts);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   // Sort products
   const sortedProducts = [...filteredProducts].sort((a, b) => {
@@ -45,8 +54,8 @@ export default function CategoryPage() {
   return (
     <div className="min-h-screen w-screen overflow-x-hidden">
       <TopBar />
-      <Header />
-      <Navigation />
+      <Header onMenuToggle={toggleMobileMenu} isMenuOpen={isMobileMenuOpen} />
+      <Navigation isMobileMenuOpen={isMobileMenuOpen} onCloseMobileMenu={closeMobileMenu} />
       
       <div className="min-h-screen bg-gray-50">
         {/* Category Header */}
@@ -109,7 +118,7 @@ export default function CategoryPage() {
               className={
                 viewMode === 'grid'
                   ? 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4'
-                  : 'flex flex-col gap-3 sm:gap-4'
+                  : 'flex flex-col gap-2 sm:gap-3 md:gap-4'
               }
             >
               {sortedProducts.map((product) => (

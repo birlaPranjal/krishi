@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
@@ -27,11 +30,21 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import Footer from "@/components/Footer";
 
 export default function Home() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen w-screen overflow-x-hidden">
       <TopBar />
-      <Header />
-      <Navigation />
+      <Header onMenuToggle={toggleMobileMenu} isMenuOpen={isMobileMenuOpen} />
+      <Navigation isMobileMenuOpen={isMobileMenuOpen} onCloseMobileMenu={closeMobileMenu} />
       <TrustBadges />
       <Carousel />
       <CampaignBanners />

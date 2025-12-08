@@ -429,10 +429,10 @@ export default function BestSellers() {
             View All →
           </a>
         </div>
-        <div className="overflow-x-auto scrollbar-hide -mx-4 md:-mx-6 px-4 md:px-6">
-          <div className="flex gap-4 pb-4" style={{ minWidth: 'max-content' }}>
+        <div className="overflow-x-auto scrollbar-hide -mx-3 sm:-mx-4 md:-mx-6 px-3 sm:px-4 md:px-6">
+          <div className="flex gap-3 sm:gap-4 pb-4" style={{ minWidth: 'max-content' }}>
             {products.map((product) => (
-              <div key={product.id} className="flex-shrink-0 w-[200px] sm:w-[220px] md:w-[240px] lg:w-[260px]">
+              <div key={product.id} className="flex-shrink-0 w-[140px] xs:w-[160px] sm:w-[200px] md:w-[240px] lg:w-[260px]">
                 <ProductCard product={product} />
               </div>
             ))}
