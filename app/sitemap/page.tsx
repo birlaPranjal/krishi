@@ -48,7 +48,6 @@ export default function SitemapPage() {
         { name: "Today's Offers", href: "/todays-offers" },
         { name: "ECLAT Talk", href: "/eclat-talk" },
         { name: "Find Commodity Prices", href: "/find-commodity-prices" },
-        { name: "ECLAT E-Magazines", href: "/eclat-e-magazines" },
         { name: "How Referral Works", href: "/how-referral-works" },
         { name: "ECLAT AGROXGLOBAL Blog", href: "/eclat-agroxglobal-blog" }
       ]

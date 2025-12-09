@@ -246,14 +246,6 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link 
-                    href="/eclat-e-magazines" 
-                    className="text-sm sm:text-base text-gray-200 hover:text-white hover:underline transition-all duration-200 inline-block"
-                  >
-                    ECLAT E-Magazines
-                  </Link>
-                </li>
-                <li>
-                  <Link 
                     href="/how-referral-works" 
                     className="text-sm sm:text-base text-gray-200 hover:text-white hover:underline transition-all duration-200 inline-block"
                   >
