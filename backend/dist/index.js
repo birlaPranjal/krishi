@@ -27,29 +27,17 @@ const createApp = () => {
         crossOriginEmbedderPolicy: false,
     }));
     // CORS configuration
-    // CORS configuration
-    app.use(cors({
-        origin: (origin, callback) => {
-            const allowedOrigins = config.corsOrigin.split(',').map(origin => origin.trim());
-            // Allow requests with no origin (like mobile apps or curl requests)
-            if (!origin)
-                return callback(null, true);
-            if (allowedOrigins.indexOf(origin) !== -1) {
-                callback(null, true);
-            }
-            else {
-                // Log blocked origin in development for easier debugging
-                if (config.nodeEnv === 'development') {
-                    console.warn(`Blocked by CORS: ${origin}`);
-                }
-                callback(new Error('Not allowed by CORS'));
-            }
-        },
+    const corsOrigins = process.env.CORS_ORIGIN
+        ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
+        : ['http://localhost:3000', 'http://localhost:5173'];
+    const corsOptions = {
+        origin: corsOrigins,
         credentials: true,
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
         maxAge: 86400, // 24 hours
-    }));
+    };
+    app.use(cors(corsOptions));
     // Cookie parser (must be before routes)
     app.use(cookieParser());
     // Request parsing with size limits
