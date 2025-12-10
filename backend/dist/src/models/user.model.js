@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     avatarUrl: { type: String },
     role: {
         type: String,
-        enum: ['CUSTOMER', 'SELLER', 'ADMIN', 'SUPER_ADMIN'],
+        enum: ['CUSTOMER', 'ADMIN'],
         default: 'CUSTOMER'
     },
     status: {
