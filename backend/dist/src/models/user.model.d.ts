@@ -3,7 +3,7 @@ export declare const userModel: mongoose.Model<{
     email: string;
     passwordHash: string;
     firstName: string;
-    role: "CUSTOMER" | "SELLER" | "ADMIN" | "SUPER_ADMIN";
+    role: "CUSTOMER" | "ADMIN";
     status: "ACTIVE" | "INACTIVE" | "PENDING_VERIFICATION" | "SUSPENDED";
     emailVerified: boolean;
     phoneVerified: boolean;
@@ -56,7 +56,7 @@ export declare const userModel: mongoose.Model<{
     email: string;
     passwordHash: string;
     firstName: string;
-    role: "CUSTOMER" | "SELLER" | "ADMIN" | "SUPER_ADMIN";
+    role: "CUSTOMER" | "ADMIN";
     status: "ACTIVE" | "INACTIVE" | "PENDING_VERIFICATION" | "SUSPENDED";
     emailVerified: boolean;
     phoneVerified: boolean;
@@ -111,7 +111,7 @@ export declare const userModel: mongoose.Model<{
     email: string;
     passwordHash: string;
     firstName: string;
-    role: "CUSTOMER" | "SELLER" | "ADMIN" | "SUPER_ADMIN";
+    role: "CUSTOMER" | "ADMIN";
     status: "ACTIVE" | "INACTIVE" | "PENDING_VERIFICATION" | "SUSPENDED";
     emailVerified: boolean;
     phoneVerified: boolean;
@@ -170,7 +170,7 @@ export declare const userModel: mongoose.Model<{
     email: string;
     passwordHash: string;
     firstName: string;
-    role: "CUSTOMER" | "SELLER" | "ADMIN" | "SUPER_ADMIN";
+    role: "CUSTOMER" | "ADMIN";
     status: "ACTIVE" | "INACTIVE" | "PENDING_VERIFICATION" | "SUSPENDED";
     emailVerified: boolean;
     phoneVerified: boolean;
@@ -221,7 +221,7 @@ export declare const userModel: mongoose.Model<{
     email: string;
     passwordHash: string;
     firstName: string;
-    role: "CUSTOMER" | "SELLER" | "ADMIN" | "SUPER_ADMIN";
+    role: "CUSTOMER" | "ADMIN";
     status: "ACTIVE" | "INACTIVE" | "PENDING_VERIFICATION" | "SUSPENDED";
     emailVerified: boolean;
     phoneVerified: boolean;
@@ -276,7 +276,7 @@ export declare const userModel: mongoose.Model<{
     email: string;
     passwordHash: string;
     firstName: string;
-    role: "CUSTOMER" | "SELLER" | "ADMIN" | "SUPER_ADMIN";
+    role: "CUSTOMER" | "ADMIN";
     status: "ACTIVE" | "INACTIVE" | "PENDING_VERIFICATION" | "SUSPENDED";
     emailVerified: boolean;
     phoneVerified: boolean;
@@ -336,7 +336,7 @@ export declare const userModel: mongoose.Model<{
         email: string;
         passwordHash: string;
         firstName: string;
-        role: "CUSTOMER" | "SELLER" | "ADMIN" | "SUPER_ADMIN";
+        role: "CUSTOMER" | "ADMIN";
         status: "ACTIVE" | "INACTIVE" | "PENDING_VERIFICATION" | "SUSPENDED";
         emailVerified: boolean;
         phoneVerified: boolean;
@@ -391,7 +391,7 @@ export declare const userModel: mongoose.Model<{
         email: string;
         passwordHash: string;
         firstName: string;
-        role: "CUSTOMER" | "SELLER" | "ADMIN" | "SUPER_ADMIN";
+        role: "CUSTOMER" | "ADMIN";
         status: "ACTIVE" | "INACTIVE" | "PENDING_VERIFICATION" | "SUSPENDED";
         emailVerified: boolean;
         phoneVerified: boolean;
@@ -449,7 +449,7 @@ export declare const userModel: mongoose.Model<{
     email: string;
     passwordHash: string;
     firstName: string;
-    role: "CUSTOMER" | "SELLER" | "ADMIN" | "SUPER_ADMIN";
+    role: "CUSTOMER" | "ADMIN";
     status: "ACTIVE" | "INACTIVE" | "PENDING_VERIFICATION" | "SUSPENDED";
     emailVerified: boolean;
     phoneVerified: boolean;
@@ -512,7 +512,7 @@ export declare const userModel: mongoose.Model<{
     email: string;
     passwordHash: string;
     firstName: string;
-    role: "CUSTOMER" | "SELLER" | "ADMIN" | "SUPER_ADMIN";
+    role: "CUSTOMER" | "ADMIN";
     status: "ACTIVE" | "INACTIVE" | "PENDING_VERIFICATION" | "SUSPENDED";
     emailVerified: boolean;
     phoneVerified: boolean;
