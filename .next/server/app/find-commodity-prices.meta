@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/find-commodity-prices/layout,_N_T_/find-commodity-prices/page,_N_T_/find-commodity-prices"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/find-commodity-prices/__PAGE__",
+    "/find-commodity-prices",
+    "/_index",
+    "/_head"
+  ]
+}

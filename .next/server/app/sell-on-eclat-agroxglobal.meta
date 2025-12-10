@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/sell-on-eclat-agroxglobal/layout,_N_T_/sell-on-eclat-agroxglobal/page,_N_T_/sell-on-eclat-agroxglobal"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/sell-on-eclat-agroxglobal/__PAGE__",
+    "/sell-on-eclat-agroxglobal",
+    "/_index",
+    "/_head"
+  ]
+}

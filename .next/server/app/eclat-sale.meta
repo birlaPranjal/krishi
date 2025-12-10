@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/eclat-sale/layout,_N_T_/eclat-sale/page,_N_T_/eclat-sale"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/eclat-sale/__PAGE__",
+    "/eclat-sale",
+    "/_index",
+    "/_head"
+  ]
+}

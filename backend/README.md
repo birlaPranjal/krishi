@@ -1,6 +1,6 @@
 # KRISHANSHECLAT AGROXGLOBAL Backend API
 
-A robust, scalable backend API for the KRISHANSHECLAT AGROXGLOBAL e-commerce platform built with Express.js, TypeScript, and Prisma ORM.
+A robust, scalable backend API for the KRISHANSHECLAT AGROXGLOBAL e-commerce platform built with Express.js, TypeScript, and Mongoose ODM.
 
 ## 🚀 Features
 
@@ -41,19 +41,20 @@ A robust, scalable backend API for the KRISHANSHECLAT AGROXGLOBAL e-commerce pla
 
 ```
 backend/
-├── prisma/
-│   └── schema.prisma       # Database schema
 ├── src/
 │   ├── config/             # Configuration files
 │   ├── controllers/        # Route controllers
-│   ├── lib/                # Shared libraries
+│   ├── models/             # Mongoose models
 │   ├── middleware/         # Express middleware
 │   ├── routes/             # API routes
 │   ├── types/              # TypeScript types
 │   ├── utils/              # Utility functions
 │   └── index.ts            # Application entry point
+├── api/
+│   └── index.ts            # Vercel serverless entry point
 ├── package.json
 ├── tsconfig.json
+├── vercel.json             # Vercel deployment configuration
 └── README.md
 ```
 
@@ -62,8 +63,8 @@ backend/
 - **Runtime**: Node.js
 - **Framework**: Express.js
 - **Language**: TypeScript
-- **ORM**: Prisma
-- **Database**: PostgreSQL
+- **ODM**: Mongoose
+- **Database**: MongoDB
 - **Authentication**: JWT
 - **Validation**: express-validator
 
@@ -83,11 +84,8 @@ backend/
 
 3. **Set up the database**
    ```bash
-   # Generate Prisma client
-   npm run prisma:generate
-
-   # Run migrations
-   npm run prisma:migrate
+   # Ensure MongoDB connection string is set in .env file
+   # MongoDB will connect automatically when the server starts
    ```
 
 4. **Start the development server**
@@ -106,7 +104,9 @@ PORT=5000
 API_VERSION=v1
 
 # Database
-DATABASE_URL="postgresql://username:password@localhost:5432/eclat_agroxglobal?schema=public"
+MONGODB_URI="mongodb://localhost:27017/eclat_agroxglobal"
+# Or for MongoDB Atlas:
+# MONGODB_URI="mongodb+srv://username:password@cluster.mongodb.net/eclat_agroxglobal"
 
 # JWT
 JWT_SECRET=your-super-secret-jwt-key
@@ -180,11 +180,7 @@ npm run build       # Compile TypeScript
 npm start           # Start production server
 
 # Database
-npm run prisma:generate   # Generate Prisma client
-npm run prisma:migrate    # Run database migrations
-npm run prisma:studio     # Open Prisma Studio
-npm run prisma:push       # Push schema to database
-npm run seed              # Seed database
+npm run seed              # Seed database (if seed script exists)
 ```
 
 ## 🔒 Security Features
@@ -193,7 +189,7 @@ npm run seed              # Seed database
 - CORS configuration
 - Rate limiting
 - Input validation
-- SQL injection protection (via Prisma)
+- SQL injection protection (via Mongoose parameterized queries)
 - XSS protection
 
 ## 🚀 Deployment

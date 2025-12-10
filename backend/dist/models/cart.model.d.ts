@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import mongoose from 'mongoose';
 export declare const Cart: mongoose.Model<{
     isActive: boolean;
@@ -350,4 +351,7 @@ export declare const Cart: mongoose.Model<{
 } & {
     __v: number;
 }>;
+=======
+export declare const Cart: any;
+>>>>>>> 158cec46e5657871cfde542139451eaf8f30285e
 //# sourceMappingURL=cart.model.d.ts.map
