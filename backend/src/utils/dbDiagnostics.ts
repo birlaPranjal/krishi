@@ -57,3 +57,4 @@ export const logDatabaseDiagnostics = (): void => {
   console.log('');
 };
 
+
