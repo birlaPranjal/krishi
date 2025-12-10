@@ -4,9 +4,11 @@
  * 
  * Note: Vercel will compile this file and handle the import from src/index.ts
  * The build process compiles the entire backend before deploying
+ * The handler will automatically connect to MongoDB on first invocation
  */
-import app from '../src/index.js';
+import handler from '../src/index.js';
 
-// Export the Express app as the handler for Vercel
-export default app;
+// Export the handler for Vercel serverless functions
+// The handler includes database connection management
+export default handler;
 

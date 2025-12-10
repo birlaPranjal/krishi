@@ -166,9 +166,26 @@ const startServer = () => {
     });
 };
 // Vercel serverless function handler
-export default app;
+// For Vercel, we need to ensure DB connection on first invocation
+let dbConnected = false;
+const vercelHandler = async (req, res) => {
+    // Ensure database connection on first invocation
+    if (!dbConnected && mongoose.connection.readyState !== 1) {
+        try {
+            await connectDB();
+            dbConnected = true;
+        }
+        catch (error) {
+            console.error('Failed to connect to database:', error);
+            return res.status(500).json({ success: false, message: 'Database connection failed' });
+        }
+    }
+    // Handle Express app
+    return app(req, res);
+};
+export default vercelHandler;
 // Export handler for Vercel serverless functions
-export const handler = app;
+export const handler = vercelHandler;
 // Start the server only if not running on Vercel
 // Vercel sets VERCEL environment variable
 if (!process.env.VERCEL) {

@@ -51,16 +51,16 @@ Frontend (Next.js)          Backend (Express.js)
 
 4. Update `.env` file with your database connection:
    ```env
-   DATABASE_URL=postgresql://username:password@localhost:5432/database_name
+   MONGODB_URI=mongodb://localhost:27017/eclat_agroxglobal
+   CORS_ORIGIN=http://localhost:3000
+   ```
+   Or for MongoDB Atlas:
+   ```env
+   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/eclat_agroxglobal
    CORS_ORIGIN=http://localhost:3000
    ```
 
-5. Run database migrations:
-   ```bash
-   npm run prisma:migrate
-   ```
-
-6. Start the backend server:
+5. Start the backend server:
    ```bash
    # Development
    npm run dev
@@ -165,7 +165,7 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NODE_ENV=development
 PORT=5000
 API_VERSION=v1
-DATABASE_URL=postgresql://...
+MONGODB_URI=mongodb://localhost:27017/eclat_agroxglobal
 CORS_ORIGIN=http://localhost:3000
 JWT_SECRET=...
 JWT_REFRESH_SECRET=...
