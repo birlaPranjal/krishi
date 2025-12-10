@@ -2,7 +2,9 @@
  * Products API Client
  */
 
-import { fetchPublic, fetchWithAuth, ApiResponse } from './client';
+import axios from 'axios';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3003/api/v1';
 
 interface ProductFilters {
   page?: number;
@@ -26,27 +28,32 @@ export const getProducts = async (filters: ProductFilters = {}) => {
     }
   });
 
-  return fetchPublic<Array<any>>(`/products?${params.toString()}`);
+  const response = await axios.get(`${API_BASE_URL}/products?${params.toString()}`);
+  return response.data;
 };
 
 // Get product by ID
 export const getProductById = async (productId: string) => {
-  return fetchPublic<any>(`/products/${productId}`);
+  const response = await axios.get(`${API_BASE_URL}/products/${productId}`);
+  return response.data;
 };
 
 // Get product by slug
 export const getProductBySlug = async (slug: string) => {
-  return fetchPublic<any>(`/products/slug/${slug}`);
+  const response = await axios.get(`${API_BASE_URL}/products/slug/${slug}`);
+  return response.data;
 };
 
 // Get featured products
 export const getFeaturedProducts = async (limit: number = 10) => {
-  return fetchPublic<Array<any>>(`/products/featured?limit=${limit}`);
+  const response = await axios.get(`${API_BASE_URL}/products/featured?limit=${limit}`);
+  return response.data;
 };
 
 // Get bestseller products
 export const getBestsellerProducts = async (limit: number = 10) => {
-  return fetchPublic<Array<any>>(`/products/bestsellers?limit=${limit}`);
+  const response = await axios.get(`${API_BASE_URL}/products/bestsellers?limit=${limit}`);
+  return response.data;
 };
 
 // Search products
@@ -58,6 +65,7 @@ export const searchProducts = async (query: string, filters: ProductFilters = {}
     }
   });
 
-  return fetchPublic<Array<any>>(`/products/search?${params.toString()}`);
+  const response = await axios.get(`${API_BASE_URL}/products/search?${params.toString()}`);
+  return response.data;
 };
 

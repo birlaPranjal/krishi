@@ -2,7 +2,9 @@
  * Authentication API Client
  */
 
-import { fetchWithAuth, fetchPublic, ApiResponse, API_BASE_URL } from './client';
+import axios from 'axios';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3003/api/v1';
 
 interface LoginRequest {
   email: string;
@@ -15,6 +17,12 @@ interface RegisterRequest {
   firstName: string;
   lastName?: string;
   phone?: string;
+}
+
+export interface ApiResponse<T = any> {
+  success: boolean;
+  data?: T;
+  message?: string;
 }
 
 interface AuthResponse {
@@ -34,41 +42,24 @@ interface AuthResponse {
 
 // Register new user
 export const register = async (data: RegisterRequest): Promise<ApiResponse<AuthResponse>> => {
-  const result = await fetchPublic<AuthResponse>('/auth/register', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  });
-  
-  // Store tokens if provided
-  if (result.data?.tokens) {
-    localStorage.setItem('accessToken', result.data.tokens.accessToken);
-    localStorage.setItem('refreshToken', result.data.tokens.refreshToken);
-  }
-
-  return result;
+  const response = await axios.post(`${API_BASE_URL}/auth/register`, data);
+  return response.data;
 };
 
 // Login user
 export const login = async (data: LoginRequest): Promise<ApiResponse<AuthResponse>> => {
-  const result = await fetchPublic<AuthResponse>('/auth/login', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  });
-  
-  // Store tokens if provided
-  if (result.data?.tokens) {
-    localStorage.setItem('accessToken', result.data.tokens.accessToken);
-    localStorage.setItem('refreshToken', result.data.tokens.refreshToken);
-  }
-
-  return result;
+  const response = await axios.post(`${API_BASE_URL}/auth/login`, data);
+  return response.data;
 };
 
 // Logout user
 export const logout = async (): Promise<void> => {
   try {
-    await fetchWithAuth('/auth/logout', {
-      method: 'POST',
+    const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+    await axios.post(`${API_BASE_URL}/auth/logout`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     });
   } catch (error) {
     console.error('Logout error:', error);
@@ -81,9 +72,13 @@ export const logout = async (): Promise<void> => {
 
 // Get current user profile
 export const getProfile = async (): Promise<ApiResponse<any>> => {
-  return fetchWithAuth('/auth/me');
+  const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+  const response = await axios.get(`${API_BASE_URL}/auth/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return response.data;
 };
 
-// Refresh token (re-exported from client for convenience)
-export { refreshAccessToken as refreshToken } from './client';
 

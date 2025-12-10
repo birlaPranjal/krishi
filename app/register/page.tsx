@@ -9,6 +9,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/contexts/AuthContext';
 import { Mail, Lock, Eye, EyeOff, User, Phone, UserPlus } from 'lucide-react';
+import axios from 'axios';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -53,13 +54,16 @@ export default function RegisterPage() {
     }
 
     try {
-      await register({
+      const response = await axios.post(' http://localhost:3001/api/v1/auth/register', {
         email: formData.email,
         password: formData.password,
         firstName: formData.firstName,
         lastName: formData.lastName || undefined,
         phone: formData.phone || undefined,
-      });
+      },
+        {
+          withCredentials: true,
+        });
       router.push('/');
     } catch (err: any) {
       setError(err.message || 'Registration failed. Please try again.');
@@ -67,6 +71,8 @@ export default function RegisterPage() {
       setLoading(false);
     }
   };
+
+
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);

@@ -2,41 +2,63 @@
  * Cart API Client
  */
 
-import { fetchWithAuth, ApiResponse } from './client';
+import axios from 'axios';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3003/api/v1';
+
+const getAuthHeaders = () => {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+  return {
+    Authorization: token ? `Bearer ${token}` : '',
+  };
+};
+
+export interface ApiResponse<T = any> {
+  success: boolean;
+  data?: T;
+  message?: string;
+}
 
 // Get cart
 export const getCart = async () => {
-  return fetchWithAuth<any>('/cart');
+  const response = await axios.get(`${API_BASE_URL}/cart`, {
+    headers: getAuthHeaders(),
+  });
+  return response.data;
 };
 
 // Add to cart
 export const addToCart = async (productId: string, variantId: string | null, quantity: number = 1) => {
-  return fetchWithAuth<any>('/cart/items', {
-    method: 'POST',
-    body: JSON.stringify({ productId, variantId, quantity }),
-  });
+  const response = await axios.post(`${API_BASE_URL}/cart/items`,
+    { productId, variantId, quantity },
+    { headers: getAuthHeaders() }
+  );
+  return response.data;
 };
 
 // Update cart item
 export const updateCartItem = async (productId: string, quantity: number, variantId?: string) => {
-  return fetchWithAuth<any>(`/cart/items/${productId}`, {
-    method: 'PUT',
-    body: JSON.stringify({ quantity, variantId }),
-  });
+  const response = await axios.put(`${API_BASE_URL}/cart/items/${productId}`,
+    { quantity, variantId },
+    { headers: getAuthHeaders() }
+  );
+  return response.data;
 };
 
 // Remove from cart
 export const removeFromCart = async (productId: string, variantId?: string) => {
   const params = variantId ? `?variantId=${variantId}` : '';
-  return fetchWithAuth<any>(`/cart/items/${productId}${params}`, {
-    method: 'DELETE',
+  const response = await axios.delete(`${API_BASE_URL}/cart/items/${productId}${params}`, {
+    headers: getAuthHeaders(),
   });
+  return response.data;
 };
 
 // Clear cart
 export const clearCart = async () => {
-  return fetchWithAuth<any>('/cart', {
-    method: 'DELETE',
+  const response = await axios.delete(`${API_BASE_URL}/cart`, {
+    headers: getAuthHeaders(),
   });
+  return response.data;
 };
 

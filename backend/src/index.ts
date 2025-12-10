@@ -34,13 +34,14 @@ const createApp = (): Express => {
 
   // CORS configuration
   const corsOptions = {
-    origin: config.corsOrigin.split(',').map(origin => origin.trim()),
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
     maxAge: 86400, // 24 hours
   };
   app.use(cors(corsOptions));
+
 
   // Cookie parser (must be before routes)
   app.use(cookieParser());

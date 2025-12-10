@@ -42,6 +42,9 @@ export class AuthController {
   register = asyncHandler(async (req: Request, res: Response) => {
     const { email, password, firstName, lastName, phone } = req.body;
 
+    // Sanitize phone: empty string should be undefined to avoid unique index violation (sparse index)
+    const sanitizedPhone = phone && phone.trim() !== '' ? phone.trim() : undefined;
+
     // Validate password strength
     const passwordValidation = validatePassword(password);
     if (!passwordValidation.isValid) {
@@ -58,9 +61,20 @@ export class AuthController {
     }
 
     // Check if user already exists
-    const existingUser: any = await User.findOne({
-      $or: [{ email: email.toLowerCase() }, { phone: phone }]
-    });
+    const existingUserQuery: any = { email: email.toLowerCase() };
+    if (sanitizedPhone) {
+      existingUserQuery.$or = [{ email: email.toLowerCase() }, { phone: sanitizedPhone }];
+      // Note: The above logic is slightly flawed for $or.
+      // Correct logic:
+      // existingUser = await User.findOne({ $or: [{ email }, { phone }] })
+    }
+
+    // Better query construction
+    const query = sanitizedPhone
+      ? { $or: [{ email: email.toLowerCase() }, { phone: sanitizedPhone }] }
+      : { email: email.toLowerCase() };
+
+    const existingUser: any = await User.findOne(query);
 
     if (existingUser) {
       // Don't reveal which field already exists (security best practice)
@@ -76,7 +90,7 @@ export class AuthController {
       passwordHash,
       firstName: firstName.trim(),
       lastName: lastName?.trim(),
-      phone: phone?.trim(),
+      phone: sanitizedPhone,
       status: 'ACTIVE', // In production, set to 'PENDING_VERIFICATION'
       emailVerified: false,
     });

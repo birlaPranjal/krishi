@@ -2,7 +2,22 @@
  * Order Management API Client
  */
 
-import { fetchWithAuth, ApiResponse } from './client';
+import axios from 'axios';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3003/api/v1';
+
+const getAuthHeaders = () => {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+  return {
+    Authorization: token ? `Bearer ${token}` : '',
+  };
+};
+
+export interface ApiResponse<T = any> {
+  success: boolean;
+  data?: T;
+  message?: string;
+}
 
 interface OrderFilters {
   page?: number;
@@ -28,7 +43,10 @@ export const getUserOrders = async (filters: OrderFilters = {}) => {
     }
   });
 
-  return fetchWithAuth<Array<any>>(`/orders/my-orders?${params.toString()}`);
+  const response = await axios.get(`${API_BASE_URL}/orders/my-orders?${params.toString()}`, {
+    headers: getAuthHeaders(),
+  });
+  return response.data;
 };
 
 export const createOrder = async (orderData: {
@@ -43,21 +61,25 @@ export const createOrder = async (orderData: {
   couponCode?: string;
   customerNotes?: string;
 }) => {
-  return fetchWithAuth<any>('/orders', {
-    method: 'POST',
-    body: JSON.stringify(orderData),
+  const response = await axios.post(`${API_BASE_URL}/orders`, orderData, {
+    headers: getAuthHeaders(),
   });
+  return response.data;
 };
 
 export const getUserOrderById = async (orderId: string) => {
-  return fetchWithAuth<any>(`/orders/my-orders/${orderId}`);
+  const response = await axios.get(`${API_BASE_URL}/orders/my-orders/${orderId}`, {
+    headers: getAuthHeaders(),
+  });
+  return response.data;
 };
 
 export const cancelOrder = async (orderId: string, reason?: string) => {
-  return fetchWithAuth<any>(`/orders/${orderId}/cancel`, {
-    method: 'POST',
-    body: JSON.stringify({ reason }),
-  });
+  const response = await axios.post(`${API_BASE_URL}/orders/${orderId}/cancel`,
+    { reason },
+    { headers: getAuthHeaders() }
+  );
+  return response.data;
 };
 
 // Admin Order APIs
@@ -69,11 +91,17 @@ export const getAllOrders = async (filters: OrderFilters = {}) => {
     }
   });
 
-  return fetchWithAuth<Array<any>>(`/orders?${params.toString()}`);
+  const response = await axios.get(`${API_BASE_URL}/orders?${params.toString()}`, {
+    headers: getAuthHeaders(),
+  });
+  return response.data;
 };
 
 export const getOrderById = async (orderId: string) => {
-  return fetchWithAuth<any>(`/orders/${orderId}`);
+  const response = await axios.get(`${API_BASE_URL}/orders/${orderId}`, {
+    headers: getAuthHeaders(),
+  });
+  return response.data;
 };
 
 export const updateOrderStatus = async (
@@ -82,10 +110,11 @@ export const updateOrderStatus = async (
   trackingNumber?: string,
   carrierName?: string
 ) => {
-  return fetchWithAuth<any>(`/orders/${orderId}/status`, {
-    method: 'PUT',
-    body: JSON.stringify({ status, trackingNumber, carrierName }),
-  });
+  const response = await axios.put(`${API_BASE_URL}/orders/${orderId}/status`,
+    { status, trackingNumber, carrierName },
+    { headers: getAuthHeaders() }
+  );
+  return response.data;
 };
 
 export const updatePaymentStatus = async (
@@ -93,10 +122,11 @@ export const updatePaymentStatus = async (
   paymentStatus: string,
   paymentId?: string
 ) => {
-  return fetchWithAuth<any>(`/orders/${orderId}/payment-status`, {
-    method: 'PUT',
-    body: JSON.stringify({ paymentStatus, paymentId }),
-  });
+  const response = await axios.put(`${API_BASE_URL}/orders/${orderId}/payment-status`,
+    { paymentStatus, paymentId },
+    { headers: getAuthHeaders() }
+  );
+  return response.data;
 };
 
 export const getOrderStats = async (dateFrom?: string, dateTo?: string) => {
@@ -104,6 +134,9 @@ export const getOrderStats = async (dateFrom?: string, dateTo?: string) => {
   if (dateFrom) params.append('dateFrom', dateFrom);
   if (dateTo) params.append('dateTo', dateTo);
 
-  return fetchWithAuth<any>(`/orders/stats?${params.toString()}`);
+  const response = await axios.get(`${API_BASE_URL}/orders/stats?${params.toString()}`, {
+    headers: getAuthHeaders(),
+  });
+  return response.data;
 };
 
