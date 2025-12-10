@@ -1,17 +1,14 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
   "routes": [
     {
       "src": "/(.*)",
       "dest": "/api/index.ts"
     }
   ],
-  "env": {
-    "NODE_ENV": "production"
-  },
   "functions": {
     "api/index.ts": {
+      "runtime": "nodejs20.x",
       "maxDuration": 30
     }
   }
