@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 export declare const Brand: mongoose.Model<{
     name: string;
     isActive: boolean;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     description?: string | null | undefined;
     logoUrl?: string | null | undefined;
     websiteUrl?: string | null | undefined;
@@ -12,8 +12,8 @@ export declare const Brand: mongoose.Model<{
 }, mongoose.Document<unknown, {}, {
     name: string;
     isActive: boolean;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     description?: string | null | undefined;
     logoUrl?: string | null | undefined;
     websiteUrl?: string | null | undefined;
@@ -24,8 +24,8 @@ export declare const Brand: mongoose.Model<{
 }> & Omit<{
     name: string;
     isActive: boolean;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     description?: string | null | undefined;
     logoUrl?: string | null | undefined;
     websiteUrl?: string | null | undefined;
@@ -40,16 +40,16 @@ export declare const Brand: mongoose.Model<{
 }, {
     name: string;
     isActive: boolean;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     description?: string | null | undefined;
     logoUrl?: string | null | undefined;
     websiteUrl?: string | null | undefined;
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
     name: string;
     isActive: boolean;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     description?: string | null | undefined;
     logoUrl?: string | null | undefined;
     websiteUrl?: string | null | undefined;
@@ -60,8 +60,8 @@ export declare const Brand: mongoose.Model<{
 }>> & Omit<{
     name: string;
     isActive: boolean;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     description?: string | null | undefined;
     logoUrl?: string | null | undefined;
     websiteUrl?: string | null | undefined;
@@ -77,8 +77,8 @@ export declare const Brand: mongoose.Model<{
     [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
         name: string;
         isActive: boolean;
-        slug: string;
         isFeatured: boolean;
+        slug: string;
         description?: string | null | undefined;
         logoUrl?: string | null | undefined;
         websiteUrl?: string | null | undefined;
@@ -89,8 +89,8 @@ export declare const Brand: mongoose.Model<{
     }>> & Omit<{
         name: string;
         isActive: boolean;
-        slug: string;
         isFeatured: boolean;
+        slug: string;
         description?: string | null | undefined;
         logoUrl?: string | null | undefined;
         websiteUrl?: string | null | undefined;
@@ -104,8 +104,8 @@ export declare const Brand: mongoose.Model<{
 }, {
     name: string;
     isActive: boolean;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     description?: string | null | undefined;
     logoUrl?: string | null | undefined;
     websiteUrl?: string | null | undefined;
@@ -118,8 +118,8 @@ export declare const Brand: mongoose.Model<{
 }>, {
     name: string;
     isActive: boolean;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     description?: string | null | undefined;
     logoUrl?: string | null | undefined;
     websiteUrl?: string | null | undefined;

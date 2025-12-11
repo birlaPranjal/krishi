@@ -43,10 +43,11 @@ const createApp = () => {
         crossOriginEmbedderPolicy: false,
     }));
     // CORS configuration
-    // Allow specific origin: http://localhost:3000 (React frontend)
-    const corsOrigins = process.env.CORS_ORIGIN
-        ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
-        : ['http://localhost:3000'];
+    // Allow specific origins: localhost for development and Vercel deployment for production
+    const corsOrigins = config.corsOrigin
+        .split(',')
+        .map(origin => origin.trim())
+        .filter(origin => origin.length > 0);
     const corsOptions = {
         origin: corsOrigins,
         credentials: true, // Allow credentials (cookies, authorization headers)
@@ -130,6 +131,14 @@ const startServer = () => {
   ║                                                           ║
   ╚═══════════════════════════════════════════════════════════╝
     `);
+    });
+    app.get('/', (req, res) => {
+        res.status(200).json({
+            success: true,
+            message: 'KRISHANSHECLAT AGROXGLOBAL API is running',
+            timestamp: new Date().toISOString(),
+            environment: config.nodeEnv,
+        });
     });
     // Graceful shutdown handler
     const gracefulShutdown = (signal) => {

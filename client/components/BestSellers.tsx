@@ -1,8 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
+import { getBestsellerProducts } from '@/lib/api/products';
 
-const products = [
+// Fallback products data (used when API is unavailable)
+const fallbackProducts = [
   {
     id: '1',
     name: 'HUBEL - Humic Acid 98% Potassium Humate, Suitable for All Crops, Enhances Root Mass, Brix Level, and Plant Growth',
@@ -420,6 +423,135 @@ const products = [
   }]
 
 export default function BestSellers() {
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [useFallback, setUseFallback] = useState(false);
+
+  useEffect(() => {
+    const fetchBestsellers = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        setUseFallback(false);
+        
+        const response = await getBestsellerProducts(10);
+        if (response.success && response.data && response.data.length > 0) {
+          // Transform backend data to match frontend format
+          const transformedProducts = response.data.map((product: any) => ({
+            id: product._id || product.id,
+            name: product.name,
+            brand: product.brandName || (typeof product.brand === 'object' ? product.brand?.name : product.brand) || '',
+            rating: product.rating || product.averageRating || 0,
+            reviews: product.reviews || product.reviewCount || 0,
+            originalPrice: product.originalPrice || product.basePrice || 0,
+            currentPrice: product.currentPrice || product.salePrice || 0,
+            discount: product.discount || 0,
+            discountPercent: product.discountPercent || 0,
+            images: product.images || [],
+            variants: product.variants || [],
+            isBestSeller: product.isBestSeller || product.isBestseller || false,
+            freeDelivery: product.freeDelivery,
+            pricePerUnit: product.pricePerUnit,
+            slug: product.slug
+          }));
+          setProducts(transformedProducts);
+        } else {
+          // No products from API, use fallback
+          console.warn('No bestseller products from API, using fallback data');
+          setProducts(fallbackProducts.slice(0, 10));
+          setUseFallback(true);
+        }
+      } catch (err: any) {
+        console.error('Error fetching bestsellers:', err);
+        const errorMessage = err.message || 'Failed to load bestseller products';
+        
+        // Log additional details for debugging
+        if (process.env.NODE_ENV === 'development') {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+          console.error('API URL:', apiUrl);
+          console.error('Full error:', err);
+          console.warn('Using fallback products data due to API error');
+        }
+        
+        // Use fallback products if API fails
+        setProducts(fallbackProducts.slice(0, 10));
+        setUseFallback(true);
+        setError(null); // Don't show error if we have fallback data
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBestsellers();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-6 md:py-8 lg:py-10 bg-white">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+          <div className="flex items-center justify-between mb-6 md:mb-8">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">Best Sellers</h2>
+            <a href="#" className="text-[#16a34a] hover:text-[#15803d] font-semibold text-base md:text-lg transition-colors whitespace-nowrap hover:underline">
+              View All →
+            </a>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-2.5 md:gap-3">
+            {[...Array(10)].map((_, i) => (
+              <div key={i} className="w-full h-full flex flex-col animate-pulse">
+                <div className="bg-gray-200 rounded-lg aspect-square mb-2"></div>
+                <div className="bg-gray-200 h-4 rounded mb-2"></div>
+                <div className="bg-gray-200 h-4 rounded w-3/4"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="py-6 md:py-8 lg:py-10 bg-white">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+          <div className="flex items-center justify-between mb-6 md:mb-8">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">Best Sellers</h2>
+            <a href="#" className="text-[#16a34a] hover:text-[#15803d] font-semibold text-base md:text-lg transition-colors whitespace-nowrap hover:underline">
+              View All →
+            </a>
+          </div>
+          <div className="text-center py-8">
+            <p className="text-red-500 mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <section className="py-6 md:py-8 lg:py-10 bg-white">
+        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+          <div className="flex items-center justify-between mb-6 md:mb-8">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">Best Sellers</h2>
+            <a href="#" className="text-[#16a34a] hover:text-[#15803d] font-semibold text-base md:text-lg transition-colors whitespace-nowrap hover:underline">
+              View All →
+            </a>
+          </div>
+          <div className="text-center py-8">
+            <p className="text-gray-500">No bestseller products available at the moment.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-6 md:py-8 lg:py-10 bg-white">
       <div className="container mx-auto px-4 md:px-6 max-w-7xl">

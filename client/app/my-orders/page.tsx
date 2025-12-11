@@ -10,7 +10,7 @@ import Footer from '@/components/Footer';
 import OrderCard from '@/components/orders/OrderCard';
 import OrderStatusBadge from '@/components/orders/OrderStatusBadge';
 import { getUserOrders } from '@/lib/api/orders';
-import { Package, Search, Filter, ChevronDown, X } from 'lucide-react';
+import { Package, Search, Filter, ChevronDown, X, Truck } from 'lucide-react';
 
 const ORDER_STATUSES = [
   'ALL',
@@ -110,8 +110,19 @@ export default function MyOrdersPage() {
       <main className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">My Orders</h1>
-          <p className="text-gray-600">Track and manage your orders</p>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">My Orders</h1>
+              <p className="text-gray-600">Track and manage your orders</p>
+            </div>
+            <Link
+              href="/track-order"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg font-semibold"
+            >
+              <Truck size={20} />
+              Track Order
+            </Link>
+          </div>
         </div>
 
         {/* Stats Cards */}

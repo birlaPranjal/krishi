@@ -3,18 +3,18 @@ export declare const Cart: mongoose.Model<{
     isActive: boolean;
     user: mongoose.Types.ObjectId;
     items: mongoose.Types.DocumentArray<{
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps> & {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps>;
@@ -29,18 +29,18 @@ export declare const Cart: mongoose.Model<{
     isActive: boolean;
     user: mongoose.Types.ObjectId;
     items: mongoose.Types.DocumentArray<{
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps> & {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps>;
@@ -57,18 +57,18 @@ export declare const Cart: mongoose.Model<{
     isActive: boolean;
     user: mongoose.Types.ObjectId;
     items: mongoose.Types.DocumentArray<{
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps> & {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps>;
@@ -89,18 +89,18 @@ export declare const Cart: mongoose.Model<{
     isActive: boolean;
     user: mongoose.Types.ObjectId;
     items: mongoose.Types.DocumentArray<{
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps> & {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps>;
@@ -113,18 +113,18 @@ export declare const Cart: mongoose.Model<{
     isActive: boolean;
     user: mongoose.Types.ObjectId;
     items: mongoose.Types.DocumentArray<{
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps> & {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps>;
@@ -141,18 +141,18 @@ export declare const Cart: mongoose.Model<{
     isActive: boolean;
     user: mongoose.Types.ObjectId;
     items: mongoose.Types.DocumentArray<{
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps> & {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
     } & mongoose.DefaultTimestampProps>;
@@ -174,18 +174,18 @@ export declare const Cart: mongoose.Model<{
         isActive: boolean;
         user: mongoose.Types.ObjectId;
         items: mongoose.Types.DocumentArray<{
-            product: mongoose.Types.ObjectId;
             quantity: number;
+            product: mongoose.Types.ObjectId;
             unitPrice: number;
             variantId?: string | null | undefined;
         } & mongoose.DefaultTimestampProps, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-            product: mongoose.Types.ObjectId;
             quantity: number;
+            product: mongoose.Types.ObjectId;
             unitPrice: number;
             variantId?: string | null | undefined;
         } & mongoose.DefaultTimestampProps> & {
-            product: mongoose.Types.ObjectId;
             quantity: number;
+            product: mongoose.Types.ObjectId;
             unitPrice: number;
             variantId?: string | null | undefined;
         } & mongoose.DefaultTimestampProps>;
@@ -202,18 +202,18 @@ export declare const Cart: mongoose.Model<{
         isActive: boolean;
         user: mongoose.Types.ObjectId;
         items: mongoose.Types.DocumentArray<{
-            product: mongoose.Types.ObjectId;
             quantity: number;
+            product: mongoose.Types.ObjectId;
             unitPrice: number;
             variantId?: string | null | undefined;
         } & mongoose.DefaultTimestampProps, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-            product: mongoose.Types.ObjectId;
             quantity: number;
+            product: mongoose.Types.ObjectId;
             unitPrice: number;
             variantId?: string | null | undefined;
         } & mongoose.DefaultTimestampProps> & {
-            product: mongoose.Types.ObjectId;
             quantity: number;
+            product: mongoose.Types.ObjectId;
             unitPrice: number;
             variantId?: string | null | undefined;
         } & mongoose.DefaultTimestampProps>;
@@ -233,45 +233,45 @@ export declare const Cart: mongoose.Model<{
     isActive: boolean;
     user: mongoose.Types.ObjectId;
     items: mongoose.Types.DocumentArray<{
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } | {
-        product: string;
         quantity: number;
+        product: string;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;
         updatedAt: NativeDate;
         _id: string;
     }, mongoose.Types.Subdocument<string | mongoose.mongo.BSON.ObjectId, unknown, {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } | {
-        product: string;
         quantity: number;
+        product: string;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;
         updatedAt: NativeDate;
         _id: string;
     }> & ({
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } | {
-        product: string;
         quantity: number;
+        product: string;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;
@@ -293,45 +293,45 @@ export declare const Cart: mongoose.Model<{
     isActive: boolean;
     user: mongoose.Types.ObjectId;
     items: mongoose.Types.DocumentArray<{
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } | {
-        product: string;
         quantity: number;
+        product: string;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;
         updatedAt: NativeDate;
         _id: string;
     }, mongoose.Types.Subdocument<string | mongoose.mongo.BSON.ObjectId, unknown, {
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } | {
-        product: string;
         quantity: number;
+        product: string;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;
         updatedAt: NativeDate;
         _id: string;
     }> & ({
-        product: mongoose.Types.ObjectId;
         quantity: number;
+        product: mongoose.Types.ObjectId;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;
         updatedAt: NativeDate;
     } | {
-        product: string;
         quantity: number;
+        product: string;
         unitPrice: number;
         variantId?: string | null | undefined;
         createdAt: NativeDate;

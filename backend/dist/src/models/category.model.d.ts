@@ -3,8 +3,8 @@ export declare const Category: mongoose.Model<{
     name: string;
     isActive: boolean;
     displayOrder: number;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     parentId: mongoose.Types.ObjectId;
     productCount: number;
     description?: string | null | undefined;
@@ -18,8 +18,8 @@ export declare const Category: mongoose.Model<{
     name: string;
     isActive: boolean;
     displayOrder: number;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     parentId: mongoose.Types.ObjectId;
     productCount: number;
     description?: string | null | undefined;
@@ -35,8 +35,8 @@ export declare const Category: mongoose.Model<{
     name: string;
     isActive: boolean;
     displayOrder: number;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     parentId: mongoose.Types.ObjectId;
     productCount: number;
     description?: string | null | undefined;
@@ -56,8 +56,8 @@ export declare const Category: mongoose.Model<{
     name: string;
     isActive: boolean;
     displayOrder: number;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     parentId: mongoose.Types.ObjectId;
     productCount: number;
     description?: string | null | undefined;
@@ -69,8 +69,8 @@ export declare const Category: mongoose.Model<{
     name: string;
     isActive: boolean;
     displayOrder: number;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     parentId: mongoose.Types.ObjectId;
     productCount: number;
     description?: string | null | undefined;
@@ -86,8 +86,8 @@ export declare const Category: mongoose.Model<{
     name: string;
     isActive: boolean;
     displayOrder: number;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     parentId: mongoose.Types.ObjectId;
     productCount: number;
     description?: string | null | undefined;
@@ -108,8 +108,8 @@ export declare const Category: mongoose.Model<{
         name: string;
         isActive: boolean;
         displayOrder: number;
-        slug: string;
         isFeatured: boolean;
+        slug: string;
         parentId: mongoose.Types.ObjectId;
         productCount: number;
         description?: string | null | undefined;
@@ -125,8 +125,8 @@ export declare const Category: mongoose.Model<{
         name: string;
         isActive: boolean;
         displayOrder: number;
-        slug: string;
         isFeatured: boolean;
+        slug: string;
         parentId: mongoose.Types.ObjectId;
         productCount: number;
         description?: string | null | undefined;
@@ -145,8 +145,8 @@ export declare const Category: mongoose.Model<{
     name: string;
     isActive: boolean;
     displayOrder: number;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     parentId: mongoose.Types.ObjectId;
     productCount: number;
     description?: string | null | undefined;
@@ -164,8 +164,8 @@ export declare const Category: mongoose.Model<{
     name: string;
     isActive: boolean;
     displayOrder: number;
-    slug: string;
     isFeatured: boolean;
+    slug: string;
     parentId: mongoose.Types.ObjectId;
     productCount: number;
     description?: string | null | undefined;

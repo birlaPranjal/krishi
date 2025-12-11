@@ -140,3 +140,44 @@ export const getOrderStats = async (dateFrom?: string, dateTo?: string) => {
   return response.data;
 };
 
+// Track order by order number (public - no authentication required)
+export const trackOrderByNumber = async (orderNumber: string) => {
+  const response = await axios.get(`${API_BASE_URL}/orders/track?orderNumber=${orderNumber}`);
+  return response.data;
+};
+
+// Track order by ID (authenticated - for customers)
+export const trackOrderById = async (orderId: string) => {
+  const response = await axios.get(`${API_BASE_URL}/orders/track/${orderId}`, {
+    headers: getAuthHeaders(),
+  });
+  return response.data;
+};
+
+// Admin: Advanced order tracking/search
+export interface AdminTrackOrderParams {
+  orderNumber?: string;
+  customerEmail?: string;
+  customerPhone?: string;
+  customerName?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  status?: string;
+  paymentStatus?: string;
+  limit?: number;
+}
+
+export const adminTrackOrder = async (params: AdminTrackOrderParams) => {
+  const queryParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      queryParams.append(key, String(value));
+    }
+  });
+
+  const response = await axios.get(`${API_BASE_URL}/orders/admin/track?${queryParams.toString()}`, {
+    headers: getAuthHeaders(),
+  });
+  return response.data;
+};
+

@@ -132,7 +132,7 @@ export class OrderController {
 
       let price = Number(product.salePrice || product.basePrice);
       let variantName: string | undefined;
-      let productSku = product.sku;
+      let productSku = (product as any).sku;
       let variantId = item.variantId;
       let variant: any;
 
@@ -149,7 +149,7 @@ export class OrderController {
         }
         price = Number(variant.price);
         variantName = variant.name;
-        productSku = variant.sku || product.sku;
+        productSku = variant.sku || (product as any).sku;
       } else {
         if (product.stockQuantity < item.quantity) {
           throw new ApiError(HTTP_STATUS.BAD_REQUEST, `Not enough stock for product ${product.name}`);
@@ -501,5 +501,144 @@ export class OrderController {
     const order: any = await Order.findByIdAndUpdate(req.params.id, updateData, { new: true });
 
     res.json({ success: true, data: order });
+  });
+
+  // Track order by order number (public endpoint)
+  trackOrder = asyncHandler(async (req: Request, res: Response) => {
+    const { orderNumber } = req.query;
+
+    if (!orderNumber) {
+      throw new ApiError(400, 'Order number is required');
+    }
+
+    const order: any = await Order.findOne({ orderNumber: orderNumber as string })
+      .populate('user', 'id email firstName lastName phone')
+      .populate('items.product', 'name slug images')
+      .lean();
+
+    if (!order) {
+      throw new ApiError(404, 'Order not found');
+    }
+
+    // Return limited information for public tracking
+    const trackingInfo = {
+      orderNumber: order.orderNumber,
+      status: order.status,
+      paymentStatus: order.paymentStatus,
+      trackingNumber: order.trackingNumber,
+      carrierName: order.carrierName,
+      createdAt: order.createdAt,
+      shippedAt: order.shippedAt,
+      deliveredAt: order.deliveredAt,
+      items: order.items.map((item: any) => ({
+        productName: item.productName,
+        variantName: item.variantName,
+        quantity: item.quantity,
+        productImage: item.productImage,
+      })),
+      shippingAddress: order.shippingAddress,
+      totalAmount: order.totalAmount,
+    };
+
+    res.json({ success: true, data: trackingInfo });
+  });
+
+  // Track order by ID (authenticated - for customers to track their own orders)
+  trackOrderById = asyncHandler(async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const order: any = await Order.findOne({
+      _id: id,
+      user: req.user!.id
+    })
+      .populate('items.product', 'name slug images')
+      .lean();
+
+    if (!order) {
+      throw new ApiError(404, 'Order not found');
+    }
+
+    res.json({ success: true, data: order });
+  });
+
+  // Admin: Advanced order tracking/search
+  adminTrackOrder = asyncHandler(async (req: Request, res: Response) => {
+    const {
+      orderNumber,
+      customerEmail,
+      customerPhone,
+      customerName,
+      dateFrom,
+      dateTo,
+      status,
+      paymentStatus,
+      limit = 10,
+    } = req.query;
+
+    const query: any = {};
+
+    // Search by order number
+    if (orderNumber) {
+      query.orderNumber = new RegExp(String(orderNumber), 'i');
+    }
+
+    // Search by customer email, phone, or name (requires user lookup)
+    if (customerEmail || customerPhone || customerName) {
+      const userModel = mongoose.model('users');
+      const userQuery: any = {};
+      
+      if (customerEmail) {
+        userQuery.email = new RegExp(String(customerEmail), 'i');
+      }
+      if (customerPhone) {
+        userQuery.phone = new RegExp(String(customerPhone), 'i');
+      }
+      if (customerName) {
+        userQuery.$or = [
+          { firstName: new RegExp(String(customerName), 'i') },
+          { lastName: new RegExp(String(customerName), 'i') },
+        ];
+      }
+
+      const users = await userModel.find(userQuery).select('_id').lean();
+      const userIds = users.map((u: any) => u._id);
+      
+      if (userIds.length > 0) {
+        query.user = { $in: userIds };
+      } else {
+        // If no users found, return empty result
+        return res.json({
+          success: true,
+          data: [],
+          count: 0,
+          message: 'No orders found matching the customer criteria',
+        });
+      }
+    }
+
+    // Date range filter
+    if (dateFrom || dateTo) {
+      query.createdAt = {};
+      if (dateFrom) query.createdAt.$gte = new Date(dateFrom as string);
+      if (dateTo) query.createdAt.$lte = new Date(dateTo as string);
+    }
+
+    // Status filters
+    if (status) query.status = status;
+    if (paymentStatus) query.paymentStatus = paymentStatus;
+
+    const limitNum = Number(limit) || 10;
+    const orders = await Order.find(query)
+      .populate('user', 'id email firstName lastName phone')
+      .populate('items.product', 'name slug images')
+      .sort({ createdAt: -1 })
+      .limit(limitNum)
+      .lean();
+
+    res.json({
+      success: true,
+      data: orders,
+      count: orders.length,
+    });
   });
 }

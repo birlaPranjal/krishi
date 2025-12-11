@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { Order } from '../models/order.model.js';
 import { Product } from '../models/product.model.js';
 import { Cart } from '../models/cart.model.js';
@@ -429,6 +430,119 @@ export class OrderController {
             updateData.paidAt = new Date();
         const order = await Order.findByIdAndUpdate(req.params.id, updateData, { new: true });
         res.json({ success: true, data: order });
+    });
+    // Track order by order number (public endpoint)
+    trackOrder = asyncHandler(async (req, res) => {
+        const { orderNumber } = req.query;
+        if (!orderNumber) {
+            throw new ApiError(400, 'Order number is required');
+        }
+        const order = await Order.findOne({ orderNumber: orderNumber })
+            .populate('user', 'id email firstName lastName phone')
+            .populate('items.product', 'name slug images')
+            .lean();
+        if (!order) {
+            throw new ApiError(404, 'Order not found');
+        }
+        // Return limited information for public tracking
+        const trackingInfo = {
+            orderNumber: order.orderNumber,
+            status: order.status,
+            paymentStatus: order.paymentStatus,
+            trackingNumber: order.trackingNumber,
+            carrierName: order.carrierName,
+            createdAt: order.createdAt,
+            shippedAt: order.shippedAt,
+            deliveredAt: order.deliveredAt,
+            items: order.items.map((item) => ({
+                productName: item.productName,
+                variantName: item.variantName,
+                quantity: item.quantity,
+                productImage: item.productImage,
+            })),
+            shippingAddress: order.shippingAddress,
+            totalAmount: order.totalAmount,
+        };
+        res.json({ success: true, data: trackingInfo });
+    });
+    // Track order by ID (authenticated - for customers to track their own orders)
+    trackOrderById = asyncHandler(async (req, res) => {
+        const { id } = req.params;
+        const order = await Order.findOne({
+            _id: id,
+            user: req.user.id
+        })
+            .populate('items.product', 'name slug images')
+            .lean();
+        if (!order) {
+            throw new ApiError(404, 'Order not found');
+        }
+        res.json({ success: true, data: order });
+    });
+    // Admin: Advanced order tracking/search
+    adminTrackOrder = asyncHandler(async (req, res) => {
+        const { orderNumber, customerEmail, customerPhone, customerName, dateFrom, dateTo, status, paymentStatus, limit = 10, } = req.query;
+        const query = {};
+        // Search by order number
+        if (orderNumber) {
+            query.orderNumber = new RegExp(String(orderNumber), 'i');
+        }
+        // Search by customer email, phone, or name (requires user lookup)
+        if (customerEmail || customerPhone || customerName) {
+            const userModel = mongoose.model('users');
+            const userQuery = {};
+            if (customerEmail) {
+                userQuery.email = new RegExp(String(customerEmail), 'i');
+            }
+            if (customerPhone) {
+                userQuery.phone = new RegExp(String(customerPhone), 'i');
+            }
+            if (customerName) {
+                userQuery.$or = [
+                    { firstName: new RegExp(String(customerName), 'i') },
+                    { lastName: new RegExp(String(customerName), 'i') },
+                ];
+            }
+            const users = await userModel.find(userQuery).select('_id').lean();
+            const userIds = users.map((u) => u._id);
+            if (userIds.length > 0) {
+                query.user = { $in: userIds };
+            }
+            else {
+                // If no users found, return empty result
+                return res.json({
+                    success: true,
+                    data: [],
+                    count: 0,
+                    message: 'No orders found matching the customer criteria',
+                });
+            }
+        }
+        // Date range filter
+        if (dateFrom || dateTo) {
+            query.createdAt = {};
+            if (dateFrom)
+                query.createdAt.$gte = new Date(dateFrom);
+            if (dateTo)
+                query.createdAt.$lte = new Date(dateTo);
+        }
+        // Status filters
+        if (status)
+            query.status = status;
+        if (paymentStatus)
+            query.paymentStatus = paymentStatus;
+        const limitNum = Number(limit) || 10;
+        const orders = await Order.find(query)
+            .populate('user', 'id email firstName lastName phone')
+            .populate('items.product', 'name slug images')
+            .sort({ createdAt: -1 })
+            .limit(limitNum)
+            .lean();
+        res.json({
+            success: true,
+            data: orders,
+            count: orders.length,
+        });
     });
 }
 //# sourceMappingURL=order.controller.js.map
