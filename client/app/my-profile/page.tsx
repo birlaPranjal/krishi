@@ -21,6 +21,7 @@ import {
   X,
   Truck,
   Package,
+  LayoutDashboard,
 } from 'lucide-react';
 
 export default function MyProfilePage() {
@@ -116,11 +117,11 @@ export default function MyProfilePage() {
         {/* Header */}
         <div className="mb-8">
           <Link
-            href="/my-orders"
+            href={authUser?.role === 'ADMIN' ? '/admin/orders' : '/my-orders'}
             className="inline-flex items-center gap-2 text-gray-600 hover:text-green-600 mb-4 transition-colors font-medium"
           >
             <ArrowLeft size={20} />
-            <span>Back to My Orders</span>
+            <span>{authUser?.role === 'ADMIN' ? 'Back to Admin Dashboard' : 'Back to My Orders'}</span>
           </Link>
           <div className="flex items-center justify-between">
             <div>
@@ -300,34 +301,69 @@ export default function MyProfilePage() {
 
             {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Link
-                href="/my-orders"
-                className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-blue-100 rounded-xl">
-                    <Package size={24} className="text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900">My Orders</h3>
-                    <p className="text-sm text-gray-600">View order history</p>
-                  </div>
-                </div>
-              </Link>
-              <Link
-                href="/track-order"
-                className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-indigo-100 rounded-xl">
-                    <Truck size={24} className="text-indigo-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900">Track Order</h3>
-                    <p className="text-sm text-gray-600">Track your orders</p>
-                  </div>
-                </div>
-              </Link>
+              {authUser?.role === 'ADMIN' ? (
+                <>
+                  <Link
+                    href="/admin/orders"
+                    className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 bg-blue-100 rounded-xl">
+                        <LayoutDashboard size={24} className="text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900">Admin Dashboard</h3>
+                        <p className="text-sm text-gray-600">Manage all orders</p>
+                      </div>
+                    </div>
+                  </Link>
+                  <Link
+                    href="/admin/track-order"
+                    className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 bg-indigo-100 rounded-xl">
+                        <Truck size={24} className="text-indigo-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900">Track Order</h3>
+                        <p className="text-sm text-gray-600">Track customer orders</p>
+                      </div>
+                    </div>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/my-orders"
+                    className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 bg-blue-100 rounded-xl">
+                        <Package size={24} className="text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900">My Orders</h3>
+                        <p className="text-sm text-gray-600">View order history</p>
+                      </div>
+                    </div>
+                  </Link>
+                  <Link
+                    href="/track-order"
+                    className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 bg-indigo-100 rounded-xl">
+                        <Truck size={24} className="text-indigo-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900">Track Order</h3>
+                        <p className="text-sm text-gray-600">Track your orders</p>
+                      </div>
+                    </div>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         ) : null}
