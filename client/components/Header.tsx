@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Search, ShoppingCart, User, Truck, Menu, X, LogOut, Package, LayoutDashboard } from 'lucide-react';
+import { Search, ShoppingCart, User, Menu, X, LogOut, Package, LayoutDashboard, Home, UserCircle, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/contexts/CartContext';
@@ -68,11 +68,21 @@ export default function Header({ onMenuToggle, isMenuOpen = false }: HeaderProps
               <Image src='/logo.png' alt='logo' className='object-cover' height={100} width={200}></Image>
             </Link>
 
-            {/* Right Icons: Delivery Truck, Shopping Cart, User */}
+            {/* Right Icons: Home, My Orders (if customer), Admin Dashboard (if admin), Shopping Cart, User */}
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              <button className="text-gray-700 hover:text-green-600 hover:bg-gray-50 rounded-lg transition-all duration-200 p-2 active:scale-95">
-                <Truck size={20} className="sm:w-5 sm:h-5" />
-              </button>
+              <Link href="/" className="text-gray-700 hover:text-green-600 hover:bg-gray-50 rounded-lg transition-all duration-200 p-2 active:scale-95" title="Home">
+                <Home size={20} className="sm:w-5 sm:h-5" />
+              </Link>
+              {isAuthenticated && user?.role !== 'ADMIN' && (
+                <Link href="/my-orders" className="text-gray-700 hover:text-green-600 hover:bg-gray-50 rounded-lg transition-all duration-200 p-2 active:scale-95" title="My Orders">
+                  <Package size={20} className="sm:w-5 sm:h-5" />
+                </Link>
+              )}
+              {isAuthenticated && user?.role === 'ADMIN' && (
+                <Link href="/admin/orders" className="text-gray-700 hover:text-green-600 hover:bg-gray-50 rounded-lg transition-all duration-200 p-2 active:scale-95" title="Admin Dashboard">
+                  <LayoutDashboard size={20} className="sm:w-5 sm:h-5" />
+                </Link>
+              )}
               <Link href="/cart" className="relative text-gray-700 hover:text-green-600 hover:bg-gray-50 rounded-lg transition-all duration-200 p-2 active:scale-95">
                 <ShoppingCart size={20} className="sm:w-5 sm:h-5" />
                 {cartCount > 0 && (
@@ -140,10 +150,22 @@ export default function Header({ onMenuToggle, isMenuOpen = false }: HeaderProps
 
           {/* User Actions */}
           <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
-            <button className="flex flex-col items-center gap-1 text-gray-700 hover:text-green-600 hover:bg-gray-50 rounded-lg transition-all duration-200 text-xs md:text-sm px-3 py-2 group">
-              <Truck size={20} className="md:w-5 md:h-5 group-hover:scale-110 transition-transform" />
-              <span className="whitespace-nowrap font-medium text-[11px] md:text-xs">Track Order</span>
-            </button>
+            <Link href="/" className="flex flex-col items-center gap-1 text-gray-700 hover:text-green-600 hover:bg-gray-50 rounded-lg transition-all duration-200 text-xs md:text-sm px-3 py-2 group" title="Home">
+              <Home size={20} className="md:w-5 md:h-5 group-hover:scale-110 transition-transform" />
+              <span className="whitespace-nowrap font-medium text-[11px] md:text-xs">Home</span>
+            </Link>
+            {isAuthenticated && user?.role !== 'ADMIN' && (
+              <Link href="/my-orders" className="flex flex-col items-center gap-1 text-gray-700 hover:text-green-600 hover:bg-gray-50 rounded-lg transition-all duration-200 text-xs md:text-sm px-3 py-2 group" title="My Orders">
+                <Package size={20} className="md:w-5 md:h-5 group-hover:scale-110 transition-transform" />
+                <span className="whitespace-nowrap font-medium text-[11px] md:text-xs">My Orders</span>
+              </Link>
+            )}
+            {isAuthenticated && user?.role === 'ADMIN' && (
+              <Link href="/admin/orders" className="flex flex-col items-center gap-1 text-gray-700 hover:text-green-600 hover:bg-gray-50 rounded-lg transition-all duration-200 text-xs md:text-sm px-3 py-2 group" title="Admin Dashboard">
+                <LayoutDashboard size={20} className="md:w-5 md:h-5 group-hover:scale-110 transition-transform" />
+                <span className="whitespace-nowrap font-medium text-[11px] md:text-xs">Admin</span>
+              </Link>
+            )}
             <Link href="/cart" className="relative flex flex-col items-center gap-1 text-gray-700 hover:text-green-600 hover:bg-gray-50 rounded-lg transition-all duration-200 text-xs md:text-sm px-3 py-2 group">
               <ShoppingCart size={20} className="md:w-5 md:h-5 group-hover:scale-110 transition-transform" />
               <span className="whitespace-nowrap font-medium text-[11px] md:text-xs">Cart</span>
@@ -195,6 +217,30 @@ export default function Header({ onMenuToggle, isMenuOpen = false }: HeaderProps
                       
                       {/* Menu Items */}
                       <div className="py-2">
+                        {/* My Profile - Always at top for all users */}
+                        <Link
+                          href="/my-profile"
+                          onClick={() => setShowUserMenu(false)}
+                          className="flex items-center gap-3 px-5 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 hover:text-green-700 transition-all duration-200 group mx-2 rounded-lg"
+                        >
+                          <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 group-hover:bg-green-100 flex items-center justify-center transition-colors">
+                            <UserCircle className="h-4 w-4 text-gray-600 group-hover:text-green-600 transition-colors" />
+                          </div>
+                          <span className="font-semibold">My Profile</span>
+                        </Link>
+
+                        {/* My Address - For all users */}
+                        <Link
+                          href="/my-addresses"
+                          onClick={() => setShowUserMenu(false)}
+                          className="flex items-center gap-3 px-5 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 hover:text-green-700 transition-all duration-200 group mx-2 rounded-lg"
+                        >
+                          <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 group-hover:bg-green-100 flex items-center justify-center transition-colors">
+                            <MapPin className="h-4 w-4 text-gray-600 group-hover:text-green-600 transition-colors" />
+                          </div>
+                          <span className="font-semibold">My Addresses</span>
+                        </Link>
+
                         {user?.role === 'ADMIN' ? (
                           <Link
                             href="/admin/orders"

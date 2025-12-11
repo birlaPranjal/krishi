@@ -83,16 +83,50 @@ export class ProductController {
     });
     // Get bestsellers
     getBestsellers = asyncHandler(async (req, res) => {
+        const { limit = 12 } = req.query;
+        const limitNum = Number(limit) || 12;
+        // Query for products that are marked as bestseller at product level
+        // OR have variants marked as bestseller
         const products = await Product.find({
-            isBestseller: true,
+            $or: [
+                { isBestseller: true },
+                { isBestSeller: true },
+                { 'variants.isBestSeller': true }
+            ],
             status: 'ACTIVE',
             deletedAt: null
         })
-            .limit(12)
+            .sort({ orderCount: -1, averageRating: -1, createdAt: -1 }) // Sort by popularity, rating, then newest
+            .limit(limitNum)
             .populate('category', 'name slug')
             .populate('brand', 'name')
             .lean();
-        res.json({ success: true, data: products });
+        // Process products to filter variants and format response
+        const processedProducts = products.map((p) => {
+            // Filter variants to only show active ones
+            const activeVariants = p.variants?.filter((v) => v.isActive !== false) || [];
+            return {
+                ...p,
+                variants: activeVariants.map((v) => ({
+                    id: v._id,
+                    name: v.name,
+                    quantity: v.quantity,
+                    price: v.price,
+                    compareAtPrice: v.compareAtPrice,
+                    stockQuantity: v.stockQuantity,
+                    inStock: v.inStock,
+                    isActive: v.isActive,
+                    isDefault: v.isDefault,
+                    isBestSeller: v.isBestSeller,
+                    imageUrl: v.imageUrl
+                }))
+            };
+        });
+        res.json({
+            success: true,
+            data: processedProducts,
+            count: processedProducts.length
+        });
     });
     // Get new arrivals
     getNewArrivals = asyncHandler(async (req, res) => {
@@ -233,10 +267,6 @@ export class ProductController {
             seller: req.user.role === 'SELLER' ? req.user.id : req.body.sellerId,
         };
         const product = await Product.create(productData);
-        // Verify product was created
-        if (!product || !product._id) {
-            throw new ApiError(500, 'Failed to create product');
-        }
         // Populate for response
         const populatedProduct = await Product.findById(product._id)
             .populate('category')

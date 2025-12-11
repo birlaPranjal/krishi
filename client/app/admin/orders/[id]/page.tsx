@@ -200,21 +200,22 @@ export default function AdminOrderDetailPage() {
 
       <main className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
-        <div className="mb-6">
+        <div className="mb-8">
           <Link
             href="/admin/orders"
-            className="inline-flex items-center gap-2 text-primary hover:text-primary-dark mb-4"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-green-600 mb-4 transition-colors font-medium"
           >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Orders
+            <ArrowLeft size={20} />
+            <span>Back to Orders</span>
           </Link>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
                 Order #{order.orderNumber}
               </h1>
-              <p className="text-gray-600">
-                Placed on {format(new Date(order.createdAt), 'MMMM dd, yyyy')}
+              <p className="text-gray-600 flex items-center gap-2">
+                <Calendar size={16} />
+                Placed on {format(new Date(order.createdAt), 'MMMM dd, yyyy HH:mm')}
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -227,10 +228,66 @@ export default function AdminOrderDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
+            {/* Tracking Information */}
+            {(order.trackingNumber || order.carrierName) && (
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-200 p-6 shadow-lg">
+                <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <div className="p-2 bg-blue-100 rounded-lg">
+                    <Truck className="h-5 w-5 text-blue-600" />
+                  </div>
+                  Tracking Information
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {order.trackingNumber && (
+                    <div>
+                      <p className="text-sm text-gray-600 mb-1">Tracking Number</p>
+                      <p className="font-semibold text-gray-900 text-lg">{order.trackingNumber}</p>
+                    </div>
+                  )}
+                  {order.carrierName && (
+                    <div>
+                      <p className="text-sm text-gray-600 mb-1">Carrier</p>
+                      <p className="font-semibold text-gray-900 text-lg">{order.carrierName}</p>
+                    </div>
+                  )}
+                  {order.shippedAt && (
+                    <div>
+                      <p className="text-sm text-gray-600 mb-1">Shipped On</p>
+                      <p className="font-medium text-gray-900">
+                        {format(new Date(order.shippedAt), 'MMMM dd, yyyy HH:mm')}
+                      </p>
+                    </div>
+                  )}
+                  {order.deliveredAt && (
+                    <div>
+                      <p className="text-sm text-gray-600 mb-1">Delivered On</p>
+                      <p className="font-medium text-gray-900">
+                        {format(new Date(order.deliveredAt), 'MMMM dd, yyyy HH:mm')}
+                      </p>
+                    </div>
+                  )}
+                </div>
+                {order.trackingNumber && (
+                  <div className="mt-4 pt-4 border-t border-blue-200">
+                    <Link
+                      href={`/track-order?orderNumber=${order.orderNumber}`}
+                      target="_blank"
+                      className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm"
+                    >
+                      <Truck className="h-4 w-4" />
+                      View Tracking Page
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Customer Info */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <User className="h-5 w-5" />
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <User className="h-5 w-5 text-green-600" />
+                </div>
                 Customer Information
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -260,8 +317,13 @@ export default function AdminOrderDetailPage() {
             </div>
 
             {/* Order Items */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Items</h2>
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <div className="p-2 bg-purple-100 rounded-lg">
+                  <Package className="h-5 w-5 text-purple-600" />
+                </div>
+                Order Items
+              </h2>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -338,9 +400,11 @@ export default function AdminOrderDetailPage() {
             </div>
 
             {/* Shipping Address */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <MapPin className="h-5 w-5" />
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <div className="p-2 bg-orange-100 rounded-lg">
+                  <MapPin className="h-5 w-5 text-orange-600" />
+                </div>
                 Shipping Address
               </h2>
               <div className="text-gray-600 space-y-1">
@@ -369,7 +433,7 @@ export default function AdminOrderDetailPage() {
                   <select
                     value={statusForm.status}
                     onChange={(e) => setStatusForm({ ...statusForm, status: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all bg-gray-50 focus:bg-white shadow-sm"
                     required
                   >
                     {ORDER_STATUSES.map((status) => (
@@ -391,7 +455,7 @@ export default function AdminOrderDetailPage() {
                         onChange={(e) =>
                           setStatusForm({ ...statusForm, trackingNumber: e.target.value })
                         }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all bg-gray-50 focus:bg-white shadow-sm"
                         placeholder="Enter tracking number"
                       />
                     </div>
@@ -405,7 +469,7 @@ export default function AdminOrderDetailPage() {
                         onChange={(e) =>
                           setStatusForm({ ...statusForm, carrierName: e.target.value })
                         }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all bg-gray-50 focus:bg-white shadow-sm"
                         placeholder="e.g., FedEx, DHL"
                       />
                     </div>
@@ -414,7 +478,7 @@ export default function AdminOrderDetailPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="w-full px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2 font-semibold"
                 >
                   <Save className="h-4 w-4" />
                   {saving ? 'Saving...' : 'Update Status'}
@@ -423,8 +487,13 @@ export default function AdminOrderDetailPage() {
             </div>
 
             {/* Payment Status Update */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Update Payment Status</h2>
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <CreditCard className="h-5 w-5 text-green-600" />
+                </div>
+                Update Payment Status
+              </h2>
               <form onSubmit={handlePaymentStatusUpdate} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -435,7 +504,7 @@ export default function AdminOrderDetailPage() {
                     onChange={(e) =>
                       setPaymentForm({ ...paymentForm, paymentStatus: e.target.value })
                     }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all bg-gray-50 focus:bg-white shadow-sm"
                     required
                   >
                     {PAYMENT_STATUSES.map((status) => (
@@ -455,14 +524,14 @@ export default function AdminOrderDetailPage() {
                     onChange={(e) =>
                       setPaymentForm({ ...paymentForm, paymentId: e.target.value })
                     }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all bg-gray-50 focus:bg-white shadow-sm"
                     placeholder="Payment gateway transaction ID"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="w-full px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2 font-semibold"
                 >
                   <Save className="h-4 w-4" />
                   {saving ? 'Saving...' : 'Update Payment'}
@@ -471,8 +540,13 @@ export default function AdminOrderDetailPage() {
             </div>
 
             {/* Order Summary */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <div className="p-2 bg-indigo-100 rounded-lg">
+                  <Package className="h-5 w-5 text-indigo-600" />
+                </div>
+                Order Summary
+              </h2>
               <div className="space-y-3">
                 <div className="flex justify-between text-gray-600">
                   <span>Subtotal</span>
@@ -496,11 +570,11 @@ export default function AdminOrderDetailPage() {
                       : 'Free'}
                   </span>
                 </div>
-                <div className="border-t border-gray-200 pt-3 flex justify-between text-lg font-bold text-gray-900">
+                <div className="border-t-2 border-gray-200 pt-4 mt-4 flex justify-between text-xl font-bold text-gray-900">
                   <span>Total</span>
-                  <span className="flex items-center gap-1">
-                    <IndianRupee className="h-5 w-5" />
-                    {formatPrice(Number(order.totalAmount))}
+                  <span className="text-green-600 flex items-center gap-1">
+                    <IndianRupee size={20} />
+                    {order.totalAmount.toLocaleString('en-IN')}
                   </span>
                 </div>
               </div>

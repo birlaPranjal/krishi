@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
 export declare const Review: mongoose.Model<{
     images: string[];
+    rating: number;
     product: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
-    rating: number;
     isVerifiedPurchase: boolean;
     isApproved: boolean;
     helpfulCount: number;
     notHelpfulCount: number;
-    order?: mongoose.Types.ObjectId | null | undefined;
     title?: string | null | undefined;
+    order?: mongoose.Types.ObjectId | null | undefined;
     content?: string | null | undefined;
     sellerResponse?: string | null | undefined;
     sellerResponseAt?: NativeDate | null | undefined;
@@ -17,15 +17,15 @@ export declare const Review: mongoose.Model<{
     id: string;
 }, mongoose.Document<unknown, {}, {
     images: string[];
+    rating: number;
     product: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
-    rating: number;
     isVerifiedPurchase: boolean;
     isApproved: boolean;
     helpfulCount: number;
     notHelpfulCount: number;
-    order?: mongoose.Types.ObjectId | null | undefined;
     title?: string | null | undefined;
+    order?: mongoose.Types.ObjectId | null | undefined;
     content?: string | null | undefined;
     sellerResponse?: string | null | undefined;
     sellerResponseAt?: NativeDate | null | undefined;
@@ -35,15 +35,15 @@ export declare const Review: mongoose.Model<{
     timestamps: true;
 }> & Omit<{
     images: string[];
+    rating: number;
     product: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
-    rating: number;
     isVerifiedPurchase: boolean;
     isApproved: boolean;
     helpfulCount: number;
     notHelpfulCount: number;
-    order?: mongoose.Types.ObjectId | null | undefined;
     title?: string | null | undefined;
+    order?: mongoose.Types.ObjectId | null | undefined;
     content?: string | null | undefined;
     sellerResponse?: string | null | undefined;
     sellerResponseAt?: NativeDate | null | undefined;
@@ -57,29 +57,29 @@ export declare const Review: mongoose.Model<{
     timestamps: true;
 }, {
     images: string[];
+    rating: number;
     product: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
-    rating: number;
     isVerifiedPurchase: boolean;
     isApproved: boolean;
     helpfulCount: number;
     notHelpfulCount: number;
-    order?: mongoose.Types.ObjectId | null | undefined;
     title?: string | null | undefined;
+    order?: mongoose.Types.ObjectId | null | undefined;
     content?: string | null | undefined;
     sellerResponse?: string | null | undefined;
     sellerResponseAt?: NativeDate | null | undefined;
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
     images: string[];
+    rating: number;
     product: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
-    rating: number;
     isVerifiedPurchase: boolean;
     isApproved: boolean;
     helpfulCount: number;
     notHelpfulCount: number;
-    order?: mongoose.Types.ObjectId | null | undefined;
     title?: string | null | undefined;
+    order?: mongoose.Types.ObjectId | null | undefined;
     content?: string | null | undefined;
     sellerResponse?: string | null | undefined;
     sellerResponseAt?: NativeDate | null | undefined;
@@ -89,15 +89,15 @@ export declare const Review: mongoose.Model<{
     timestamps: true;
 }>> & Omit<{
     images: string[];
+    rating: number;
     product: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
-    rating: number;
     isVerifiedPurchase: boolean;
     isApproved: boolean;
     helpfulCount: number;
     notHelpfulCount: number;
-    order?: mongoose.Types.ObjectId | null | undefined;
     title?: string | null | undefined;
+    order?: mongoose.Types.ObjectId | null | undefined;
     content?: string | null | undefined;
     sellerResponse?: string | null | undefined;
     sellerResponseAt?: NativeDate | null | undefined;
@@ -112,15 +112,15 @@ export declare const Review: mongoose.Model<{
 } | {
     [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
         images: string[];
+        rating: number;
         product: mongoose.Types.ObjectId;
         user: mongoose.Types.ObjectId;
-        rating: number;
         isVerifiedPurchase: boolean;
         isApproved: boolean;
         helpfulCount: number;
         notHelpfulCount: number;
-        order?: mongoose.Types.ObjectId | null | undefined;
         title?: string | null | undefined;
+        order?: mongoose.Types.ObjectId | null | undefined;
         content?: string | null | undefined;
         sellerResponse?: string | null | undefined;
         sellerResponseAt?: NativeDate | null | undefined;
@@ -130,15 +130,15 @@ export declare const Review: mongoose.Model<{
         timestamps: true;
     }>> & Omit<{
         images: string[];
+        rating: number;
         product: mongoose.Types.ObjectId;
         user: mongoose.Types.ObjectId;
-        rating: number;
         isVerifiedPurchase: boolean;
         isApproved: boolean;
         helpfulCount: number;
         notHelpfulCount: number;
-        order?: mongoose.Types.ObjectId | null | undefined;
         title?: string | null | undefined;
+        order?: mongoose.Types.ObjectId | null | undefined;
         content?: string | null | undefined;
         sellerResponse?: string | null | undefined;
         sellerResponseAt?: NativeDate | null | undefined;
@@ -151,15 +151,15 @@ export declare const Review: mongoose.Model<{
     }> | undefined;
 }, {
     images: string[];
+    rating: number;
     product: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
-    rating: number;
     isVerifiedPurchase: boolean;
     isApproved: boolean;
     helpfulCount: number;
     notHelpfulCount: number;
-    order?: mongoose.Types.ObjectId | null | undefined;
     title?: string | null | undefined;
+    order?: mongoose.Types.ObjectId | null | undefined;
     content?: string | null | undefined;
     sellerResponse?: string | null | undefined;
     sellerResponseAt?: NativeDate | null | undefined;
@@ -171,15 +171,15 @@ export declare const Review: mongoose.Model<{
     __v: number;
 }>, {
     images: string[];
+    rating: number;
     product: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
-    rating: number;
     isVerifiedPurchase: boolean;
     isApproved: boolean;
     helpfulCount: number;
     notHelpfulCount: number;
-    order?: mongoose.Types.ObjectId | null | undefined;
     title?: string | null | undefined;
+    order?: mongoose.Types.ObjectId | null | undefined;
     content?: string | null | undefined;
     sellerResponse?: string | null | undefined;
     sellerResponseAt?: NativeDate | null | undefined;

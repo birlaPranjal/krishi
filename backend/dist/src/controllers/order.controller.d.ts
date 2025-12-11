@@ -17,5 +17,8 @@ export declare class OrderController {
     getOrderByIdAdmin: (req: Request, res: Response, next: import("express").NextFunction) => void;
     updateOrderStatus: (req: Request, res: Response, next: import("express").NextFunction) => void;
     updatePaymentStatus: (req: Request, res: Response, next: import("express").NextFunction) => void;
+    trackOrder: (req: Request, res: Response, next: import("express").NextFunction) => void;
+    trackOrderById: (req: Request, res: Response, next: import("express").NextFunction) => void;
+    adminTrackOrder: (req: Request, res: Response, next: import("express").NextFunction) => void;
 }
 //# sourceMappingURL=order.controller.d.ts.map

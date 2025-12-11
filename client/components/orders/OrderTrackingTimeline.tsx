@@ -10,6 +10,9 @@ interface OrderTrackingTimelineProps {
     shippedAt?: string | null;
     deliveredAt?: string | null;
     cancelledAt?: string | null;
+    trackingNumber?: string | null;
+    carrierName?: string | null;
+    orderNumber?: string;
   };
 }
 
@@ -34,7 +37,30 @@ export default function OrderTrackingTimeline({ order }: OrderTrackingTimelinePr
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-6">Order Tracking</h3>
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-lg font-semibold text-gray-900">Order Tracking</h3>
+        {order.orderNumber && (
+          <span className="text-sm text-gray-500">Order #{order.orderNumber}</span>
+        )}
+      </div>
+
+      {/* Tracking Number Display */}
+      {order.trackingNumber && (
+        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-blue-900">Tracking Number</p>
+              <p className="text-lg font-bold text-blue-700 mt-1">{order.trackingNumber}</p>
+            </div>
+            {order.carrierName && (
+              <div className="text-right">
+                <p className="text-sm text-blue-600">Carrier</p>
+                <p className="text-sm font-medium text-blue-900">{order.carrierName}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
       
       <div className="relative">
         {/* Timeline Line */}
@@ -59,7 +85,13 @@ export default function OrderTrackingTimeline({ order }: OrderTrackingTimelinePr
             let timestamp: string | null = null;
             if (step.key === 'PENDING' && order.createdAt) {
               timestamp = format(new Date(order.createdAt), 'MMM dd, yyyy HH:mm');
+            } else if (step.key === 'CONFIRMED' && order.status === 'CONFIRMED' && order.createdAt) {
+              timestamp = format(new Date(order.createdAt), 'MMM dd, yyyy HH:mm');
+            } else if (step.key === 'PROCESSING' && order.status === 'PROCESSING' && order.createdAt) {
+              timestamp = format(new Date(order.createdAt), 'MMM dd, yyyy HH:mm');
             } else if (step.key === 'SHIPPED' && order.shippedAt) {
+              timestamp = format(new Date(order.shippedAt), 'MMM dd, yyyy HH:mm');
+            } else if (step.key === 'OUT_FOR_DELIVERY' && order.status === 'OUT_FOR_DELIVERY' && order.shippedAt) {
               timestamp = format(new Date(order.shippedAt), 'MMM dd, yyyy HH:mm');
             } else if (step.key === 'DELIVERED' && order.deliveredAt) {
               timestamp = format(new Date(order.deliveredAt), 'MMM dd, yyyy HH:mm');

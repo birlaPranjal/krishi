@@ -11,8 +11,8 @@ export declare const Order: mongoose.Model<{
     totalAmount: number;
     shippingAddress: Map<string, any>;
     items: mongoose.Types.DocumentArray<{
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -23,8 +23,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -35,8 +35,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }> & {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -75,8 +75,8 @@ export declare const Order: mongoose.Model<{
     totalAmount: number;
     shippingAddress: Map<string, any>;
     items: mongoose.Types.DocumentArray<{
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -87,8 +87,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -99,8 +99,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }> & {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -141,8 +141,8 @@ export declare const Order: mongoose.Model<{
     totalAmount: number;
     shippingAddress: Map<string, any>;
     items: mongoose.Types.DocumentArray<{
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -153,8 +153,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -165,8 +165,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }> & {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -211,8 +211,8 @@ export declare const Order: mongoose.Model<{
     totalAmount: number;
     shippingAddress: Map<string, any>;
     items: mongoose.Types.DocumentArray<{
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -223,8 +223,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -235,8 +235,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }> & {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -273,8 +273,8 @@ export declare const Order: mongoose.Model<{
     totalAmount: number;
     shippingAddress: Map<string, any>;
     items: mongoose.Types.DocumentArray<{
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -285,8 +285,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -297,8 +297,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }> & {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -339,8 +339,8 @@ export declare const Order: mongoose.Model<{
     totalAmount: number;
     shippingAddress: Map<string, any>;
     items: mongoose.Types.DocumentArray<{
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -351,8 +351,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -363,8 +363,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     }> & {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -410,8 +410,8 @@ export declare const Order: mongoose.Model<{
         totalAmount: number;
         shippingAddress: Map<string, any>;
         items: mongoose.Types.DocumentArray<{
-            productName: string;
             quantity: number;
+            productName: string;
             unitPrice: number;
             discountAmount: number;
             taxAmount: number;
@@ -422,8 +422,8 @@ export declare const Order: mongoose.Model<{
             variantName?: string | null | undefined;
             productImage?: string | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-            productName: string;
             quantity: number;
+            productName: string;
             unitPrice: number;
             discountAmount: number;
             taxAmount: number;
@@ -434,8 +434,8 @@ export declare const Order: mongoose.Model<{
             variantName?: string | null | undefined;
             productImage?: string | null | undefined;
         }> & {
-            productName: string;
             quantity: number;
+            productName: string;
             unitPrice: number;
             discountAmount: number;
             taxAmount: number;
@@ -476,8 +476,8 @@ export declare const Order: mongoose.Model<{
         totalAmount: number;
         shippingAddress: Map<string, any>;
         items: mongoose.Types.DocumentArray<{
-            productName: string;
             quantity: number;
+            productName: string;
             unitPrice: number;
             discountAmount: number;
             taxAmount: number;
@@ -488,8 +488,8 @@ export declare const Order: mongoose.Model<{
             variantName?: string | null | undefined;
             productImage?: string | null | undefined;
         }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-            productName: string;
             quantity: number;
+            productName: string;
             unitPrice: number;
             discountAmount: number;
             taxAmount: number;
@@ -500,8 +500,8 @@ export declare const Order: mongoose.Model<{
             variantName?: string | null | undefined;
             productImage?: string | null | undefined;
         }> & {
-            productName: string;
             quantity: number;
+            productName: string;
             unitPrice: number;
             discountAmount: number;
             taxAmount: number;
@@ -547,8 +547,8 @@ export declare const Order: mongoose.Model<{
         [x: string]: any;
     };
     items: mongoose.Types.DocumentArray<{
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -559,8 +559,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     } | {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -572,8 +572,8 @@ export declare const Order: mongoose.Model<{
         productImage?: string | null | undefined;
         _id: string;
     }, mongoose.Types.Subdocument<string | mongoose.mongo.BSON.ObjectId, unknown, {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -584,8 +584,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     } | {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -597,8 +597,8 @@ export declare const Order: mongoose.Model<{
         productImage?: string | null | undefined;
         _id: string;
     }> & ({
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -609,8 +609,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     } | {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -658,8 +658,8 @@ export declare const Order: mongoose.Model<{
         [x: string]: any;
     };
     items: mongoose.Types.DocumentArray<{
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -670,8 +670,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     } | {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -683,8 +683,8 @@ export declare const Order: mongoose.Model<{
         productImage?: string | null | undefined;
         _id: string;
     }, mongoose.Types.Subdocument<string | mongoose.mongo.BSON.ObjectId, unknown, {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -695,8 +695,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     } | {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -708,8 +708,8 @@ export declare const Order: mongoose.Model<{
         productImage?: string | null | undefined;
         _id: string;
     }> & ({
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;
@@ -720,8 +720,8 @@ export declare const Order: mongoose.Model<{
         variantName?: string | null | undefined;
         productImage?: string | null | undefined;
     } | {
-        productName: string;
         quantity: number;
+        productName: string;
         unitPrice: number;
         discountAmount: number;
         taxAmount: number;

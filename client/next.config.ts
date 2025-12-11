@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import path from "path";
 
 const nextConfig: NextConfig = {
   images: {
@@ -32,10 +31,8 @@ const nextConfig: NextConfig = {
     return config;
   },
   // Turbopack configuration for Next.js 16
-  turbopack: {
-    // Set root directory to the directory containing this config file
-    root: path.resolve(__dirname),
-  },
+  // Empty config to silence the warning about webpack/turbopack conflict
+  turbopack: {},
 };
 
 export default nextConfig;

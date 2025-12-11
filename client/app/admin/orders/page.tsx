@@ -145,8 +145,19 @@ export default function AdminOrdersPage() {
       <main className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
-          <p className="text-gray-600">Manage and track all orders</p>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Order Management</h1>
+              <p className="text-gray-600">Manage, track, and monitor all customer orders</p>
+            </div>
+            <Link
+              href="/admin/track-order"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg font-semibold"
+            >
+              <Search size={20} />
+              Track Orders
+            </Link>
+          </div>
         </div>
 
         {/* Order Summary Cards */}
@@ -204,12 +215,15 @@ export default function AdminOrdersPage() {
         )}
 
         {/* Filters */}
-        <div className="bg-white rounded-lg border border-gray-200 p-4 mb-6">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
+            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+              <Filter className="h-5 w-5 text-green-600" />
+              Filters & Search
+            </h2>
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
             >
               <Filter className="h-4 w-4" />
               {showFilters ? 'Hide' : 'Show'} Filters
@@ -219,20 +233,20 @@ export default function AdminOrdersPage() {
           {showFilters && (
             <div className="space-y-4 pt-4 border-t border-gray-200">
               {/* Search */}
-              <form onSubmit={handleSearch} className="flex gap-4">
+              <form onSubmit={handleSearch} className="flex gap-3">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <input
                     type="text"
                     placeholder="Search by order number, customer email..."
                     value={filters.search}
                     onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all bg-gray-50 focus:bg-white shadow-sm text-gray-900 placeholder:text-gray-400 font-medium"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+                  className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all shadow-md hover:shadow-lg font-semibold"
                 >
                   Search
                 </button>
@@ -241,31 +255,31 @@ export default function AdminOrdersPage() {
               {/* Date Range */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">
                     From Date
                   </label>
                   <input
                     type="date"
                     value={filters.dateFrom}
                     onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all bg-gray-50 focus:bg-white shadow-sm text-gray-900"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">To Date</label>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">To Date</label>
                   <input
                     type="date"
                     value={filters.dateTo}
                     onChange={(e) => handleFilterChange('dateTo', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all bg-gray-50 focus:bg-white shadow-sm text-gray-900"
                   />
                 </div>
               </div>
 
               {/* Status and Payment Method Filters */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-800 mb-3">
                     Order Status
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -273,19 +287,19 @@ export default function AdminOrdersPage() {
                       <button
                         key={status}
                         onClick={() => handleFilterChange('status', status)}
-                        className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                        className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
                           filters.status === status
-                            ? 'bg-primary text-white'
+                            ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-md'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                       >
-                        {status === 'ALL' ? 'All' : status}
+                        {status === 'ALL' ? 'All' : status.replace('_', ' ')}
                       </button>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-800 mb-3">
                     Payment Method
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -293,9 +307,9 @@ export default function AdminOrdersPage() {
                       <button
                         key={method}
                         onClick={() => handleFilterChange('paymentMethod', method)}
-                        className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                        className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
                           filters.paymentMethod === method
-                            ? 'bg-primary text-white'
+                            ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-md'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                       >
@@ -311,24 +325,35 @@ export default function AdminOrdersPage() {
 
         {/* Orders List */}
         {loading ? (
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <div className="flex items-center justify-center py-20">
+            <div className="flex flex-col items-center gap-4">
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-green-200 border-t-green-600"></div>
+              <p className="text-gray-600 font-medium">Loading orders...</p>
+            </div>
           </div>
         ) : error ? (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-            <p className="text-red-800">{error}</p>
+          <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-8 text-center shadow-lg">
+            <XCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
+            <p className="text-red-800 font-semibold text-lg mb-2">{error}</p>
             <button
               onClick={fetchOrders}
-              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+              className="mt-4 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors font-semibold shadow-md"
             >
               Retry
             </button>
           </div>
         ) : orders.length === 0 ? (
-          <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
-            <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No orders found</h3>
-            <p className="text-gray-600">No orders match your current filters.</p>
+          <div className="bg-white rounded-2xl border-2 border-gray-200 p-12 text-center shadow-lg">
+            <Package className="h-20 w-20 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-gray-900 mb-2">No orders found</h3>
+            <p className="text-gray-600 mb-4">No orders match your current filters.</p>
+            <Link
+              href="/admin/track-order"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md font-semibold"
+            >
+              <Search size={20} />
+              Try Advanced Search
+            </Link>
           </div>
         ) : (
           <>
@@ -340,21 +365,21 @@ export default function AdminOrdersPage() {
 
             {/* Pagination */}
             {pagination.pages > 1 && (
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-3 bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
                 <button
                   onClick={() => setFilters({ ...filters, page: filters.page - 1 })}
                   disabled={filters.page === 1}
-                  className="px-4 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                  className="px-6 py-2 border-2 border-gray-300 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 font-semibold text-gray-700 transition-colors"
                 >
                   Previous
                 </button>
-                <span className="px-4 py-2 text-sm text-gray-600">
+                <span className="px-6 py-2 text-sm font-semibold text-gray-700 bg-gray-50 rounded-xl">
                   Page {pagination.page} of {pagination.pages}
                 </span>
                 <button
                   onClick={() => setFilters({ ...filters, page: filters.page + 1 })}
                   disabled={filters.page >= pagination.pages}
-                  className="px-4 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                  className="px-6 py-2 border-2 border-gray-300 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 font-semibold text-gray-700 transition-colors"
                 >
                   Next
                 </button>
