@@ -59,7 +59,12 @@ export default function MyOrdersPage() {
       }
 
       const response = await getUserOrders(params);
-      setOrders(response.data || []);
+      // Map orders to ensure 'id' field exists
+      const ordersWithId = (response.data || []).map((order: any) => ({
+        ...order,
+        id: order._id || order.id,
+      }));
+      setOrders(ordersWithId);
       if (response.pagination) {
         setPagination(response.pagination);
       }
