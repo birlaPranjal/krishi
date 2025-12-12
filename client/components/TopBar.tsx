@@ -7,7 +7,7 @@ export default function TopBar() {
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
 
   return (
-    <div className="bg-[#2563eb] text-white text-sm w-full border-b border-blue-600">
+    <div className="agri-top-header w-full border-b border-blue-600">
       <div className="w-full px-2 sm:px-3 md:px-4 lg:px-6 max-w-7xl mx-auto">
         <div className="flex items-center justify-between py-2 sm:py-2.5 md:py-3 gap-2">
           <div className="flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 overflow-x-auto scrollbar-hide flex-1 min-w-0">

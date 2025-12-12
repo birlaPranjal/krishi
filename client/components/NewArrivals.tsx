@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import ProductCard from './ProductCard';
 import { productData } from '@/data/products';
 import Link from 'next/link';
@@ -9,6 +10,7 @@ import { Plus } from 'lucide-react';
 export default function NewArrivals() {
   const { isAuthenticated, user } = useAuth();
   const isAdmin = isAuthenticated && user?.role === 'ADMIN';
+  const [showAll, setShowAll] = useState(false);
   
   // New Arrivals - typically products with high IDs (newer products) or high ratings
   // For now, we'll use products with high ratings and recent additions
@@ -16,8 +18,7 @@ export default function NewArrivals() {
     .filter((product) => 
       (product.rating && product.rating > 4.0) || // Good ratings indicate new quality products
       product.reviews && product.reviews < 100 // Fewer reviews might indicate newer products
-    )
-    .slice(0, 10);
+    );
 
   if (newArrivals.length === 0) {
     return null;
@@ -38,16 +39,18 @@ export default function NewArrivals() {
                 Add Product
               </Link>
             )}
-            <Link 
-              href="/categories" 
-              className="text-[#16a34a] hover:text-[#15803d] font-semibold text-base md:text-lg transition-colors whitespace-nowrap hover:underline"
-            >
-              View All →
-            </Link>
+            {newArrivals.length > 6 && (
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="text-[#16a34a] hover:text-[#15803d] font-semibold text-base md:text-lg transition-colors whitespace-nowrap hover:underline cursor-pointer"
+              >
+                {showAll ? 'Show Less ↑' : 'View All →'}
+              </button>
+            )}
           </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-2.5 md:gap-3">
-          {newArrivals.map((product) => (
+        <div className="agri-product-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5 md:gap-3">
+          {(showAll ? newArrivals : newArrivals.slice(0, 6)).map((product) => (
             <div key={product.id} className="w-full h-full flex flex-col">
               <ProductCard product={product} />
             </div>

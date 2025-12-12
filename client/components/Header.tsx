@@ -44,7 +44,7 @@ export default function Header({ onMenuToggle, isMenuOpen = false }: HeaderProps
   };
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-100 relative z-[1001] w-full sticky top-0 backdrop-blur-sm bg-white/95">
+    <header className="agri-navbar relative z-[1001] w-full">
       <div className="w-full px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
         {/* Mobile Layout */}
         <div className="lg:hidden">
@@ -120,7 +120,7 @@ export default function Header({ onMenuToggle, isMenuOpen = false }: HeaderProps
               <input
                 type="text"
                 placeholder="Search for products..."
-                className="w-full pl-10 pr-4 py-2.5 sm:py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm sm:text-base transition-all duration-200 bg-gray-50 focus:bg-white"
+                className="agri-search-bar w-full pl-10 pr-4 py-2.5 sm:py-3 text-sm sm:text-base"
               />
             </div>
           </div>
@@ -142,13 +142,13 @@ export default function Header({ onMenuToggle, isMenuOpen = false }: HeaderProps
               <input
                 type="text"
                 placeholder="Search for products..."
-                className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm md:text-base h-[46px] bg-gray-50 focus:bg-white transition-all duration-200"
+                className="agri-search-bar w-full pl-11 pr-4 py-3 rounded-l-lg text-sm md:text-base h-[46px]"
               />
             </div>
-            <button className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-0 rounded-r-lg hover:from-blue-700 hover:to-blue-800 flex items-center justify-center transition-all duration-200 h-[46px] min-w-[46px] flex-shrink-0 shadow-md hover:shadow-lg active:scale-95">
+            <button className="agri-search-button rounded-r-lg px-5 py-0 h-[46px] min-w-[46px] flex-shrink-0">
               <Search size={18} className="md:w-5 md:h-5" />
             </button>
-            <button className="bg-gradient-to-r from-green-600 to-green-700 text-white px-5 py-3 rounded-lg hover:from-green-700 hover:to-green-800 flex items-center gap-2 text-xs md:text-sm whitespace-nowrap hidden xl:flex transition-all duration-200 font-semibold h-[46px] shadow-md hover:shadow-lg active:scale-95">
+            <button className="agri-btn-primary px-5 py-3 rounded-lg flex items-center gap-2 text-xs md:text-sm whitespace-nowrap hidden xl:flex h-[46px]">
               <Search size={16} />
               <span>Search by Technical Name</span>
             </button>

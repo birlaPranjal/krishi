@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import ProductCard from './ProductCard';
 import { productData } from '@/data/products';
@@ -9,6 +10,7 @@ import { Plus } from 'lucide-react';
 export default function FeaturedProducts() {
   const { isAuthenticated, user } = useAuth();
   const isAdmin = isAuthenticated && user?.role === 'ADMIN';
+  const [showAll, setShowAll] = useState(false);
   
   // Filter featured products - match krishansheclatagro.com Featured Products section
   // These are primarily Exylon products (Crop Protection) and other high-quality products
@@ -32,8 +34,7 @@ export default function FeaturedProducts() {
       if (aIsExylon && !bIsExylon) return -1;
       if (!aIsExylon && bIsExylon) return 1;
       return 0;
-    })
-    .slice(0, 12); // Show first 12 featured products
+    });
 
   return (
     <section className="py-6 md:py-8 lg:py-10 bg-white">
@@ -50,13 +51,18 @@ export default function FeaturedProducts() {
                 Add Product
               </Link>
             )}
-            <a href="#" className="text-[#16a34a] hover:text-[#15803d] font-semibold text-base md:text-lg transition-colors whitespace-nowrap hover:underline">
-              View All →
-            </a>
+            {featuredProducts.length > 6 && (
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="text-[#16a34a] hover:text-[#15803d] font-semibold text-base md:text-lg transition-colors whitespace-nowrap hover:underline cursor-pointer"
+              >
+                {showAll ? 'Show Less ↑' : 'View All →'}
+              </button>
+            )}
           </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-2.5 md:gap-3">
-          {featuredProducts.map((product) => (
+        <div className="agri-product-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5 md:gap-3">
+          {(showAll ? featuredProducts : featuredProducts.slice(0, 6)).map((product) => (
             <div key={product.id} className="w-full h-full flex flex-col">
               <ProductCard product={product} />
             </div>

@@ -431,6 +431,7 @@ export default function BestSellers() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
 
   useEffect(() => {
@@ -501,10 +502,10 @@ export default function BestSellers() {
               View All →
             </a>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-2.5 md:gap-3">
-            {[...Array(10)].map((_, i) => (
+          <div className="agri-product-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5 md:gap-3">
+            {[...Array(6)].map((_, i) => (
               <div key={i} className="w-full h-full flex flex-col animate-pulse">
-                <div className="bg-gray-200 rounded-lg aspect-square mb-2"></div>
+                <div className="agri-skeleton rounded-lg aspect-square mb-2"></div>
                 <div className="bg-gray-200 h-4 rounded mb-2"></div>
                 <div className="bg-gray-200 h-4 rounded w-3/4"></div>
               </div>
@@ -572,13 +573,18 @@ export default function BestSellers() {
                 Add Product
               </Link>
             )}
-            <a href="#" className="text-[#16a34a] hover:text-[#15803d] font-semibold text-base md:text-lg transition-colors whitespace-nowrap hover:underline">
-              View All →
-            </a>
+            {products.length > 6 && (
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="text-[#16a34a] hover:text-[#15803d] font-semibold text-base md:text-lg transition-colors whitespace-nowrap hover:underline cursor-pointer"
+              >
+                {showAll ? 'Show Less ↑' : 'View All →'}
+              </button>
+            )}
           </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-2.5 md:gap-3">
-          {products.map((product) => (
+        <div className="agri-product-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5 md:gap-3">
+          {(showAll ? products : products.slice(0, 6)).map((product) => (
             <div key={product.id} className="w-full h-full flex flex-col">
               <ProductCard product={product} />
             </div>
